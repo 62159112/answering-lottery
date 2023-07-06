@@ -69,12 +69,15 @@ public class User implements Serializable {
      */
     @NotNull(message = "区域不能为空!",groups = {AddUser.class})
     @NotNull(message = "区域不能为空!",groups = {UpdateUser.class})
+    @Length(min = 2,max = 35,groups = {AddUser.class})
+    @Length(min = 2,max = 35,groups = {UpdateUser.class})
     @TableField(value = "userRegion")
     private String userRegion;
 
     /**
      * 答题次数
      */
+
     @TableField(value = "userNumber")
     private Integer userNumber;
 
