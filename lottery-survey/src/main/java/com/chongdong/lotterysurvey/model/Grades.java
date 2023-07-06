@@ -18,14 +18,14 @@ public class Grades implements Serializable {
     /**
      * 成绩id
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "gradesId", type = IdType.AUTO)
+    private Integer gradesid;
 
     /**
      * 用户id
      */
-    @TableField(value = "user_id")
-    private Integer userId;
+    @TableField(value = "userId")
+    private Integer userid;
 
     /**
      * 用户名
@@ -42,8 +42,8 @@ public class Grades implements Serializable {
     /**
      * 用时（答题花费时间）
      */
-    @TableField(value = "spend_time")
-    private String spendTime;
+    @TableField(value = "spendTime")
+    private String spendtime;
 
     /**
      * 注册时间

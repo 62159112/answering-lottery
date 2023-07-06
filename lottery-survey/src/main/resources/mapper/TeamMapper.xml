@@ -5,14 +5,14 @@
 <mapper namespace="com.chongdong.lotterysurvey.mapper.TeamMapper">
 
     <resultMap id="BaseResultMap" type="com.chongdong.lotterysurvey.model.Team">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="teamName" column="team_name" jdbcType="VARCHAR"/>
-            <result property="teamNumber" column="team_number" jdbcType="INTEGER"/>
-            <result property="streetId" column="street_id" jdbcType="INTEGER"/>
+            <id property="teamid" column="teamId" jdbcType="INTEGER"/>
+            <result property="teamname" column="teamName" jdbcType="VARCHAR"/>
+            <result property="teamnumber" column="teamNumber" jdbcType="INTEGER"/>
+            <result property="streetid" column="streetId" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,team_name,team_number,
-        street_id
+        teamId,teamName,teamNumber,
+        streetId
     </sql>
 </mapper>

@@ -17,26 +17,26 @@ public class Team implements Serializable {
     /**
      * 团体排名id
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "teamId", type = IdType.AUTO)
+    private Integer teamid;
 
     /**
      * 团体名称（地域/街道）
      */
-    @TableField(value = "team_name")
-    private String teamName;
+    @TableField(value = "teamName")
+    private String teamname;
 
     /**
      * 团队(地域/街道)答题人数
      */
-    @TableField(value = "team_number")
-    private Integer teamNumber;
+    @TableField(value = "teamNumber")
+    private Integer teamnumber;
 
     /**
      * 街道id
      */
-    @TableField(value = "street_id")
-    private Integer streetId;
+    @TableField(value = "streetId")
+    private Integer streetid;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

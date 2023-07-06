@@ -5,18 +5,18 @@
 <mapper namespace="com.chongdong.lotterysurvey.mapper.GradesMapper">
 
     <resultMap id="BaseResultMap" type="com.chongdong.lotterysurvey.model.Grades">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <id property="gradesid" column="gradesId" jdbcType="INTEGER"/>
+            <result property="userid" column="userId" jdbcType="INTEGER"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="score" column="score" jdbcType="INTEGER"/>
-            <result property="spendTime" column="spend_time" jdbcType="VARCHAR"/>
+            <result property="spendtime" column="spendTime" jdbcType="VARCHAR"/>
             <result property="regtime" column="regtime" jdbcType="TIMESTAMP"/>
             <result property="region" column="region" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,username,
-        score,spend_time,regtime,
+        gradesId,userId,username,
+        score,spendTime,regtime,
         region
     </sql>
 </mapper>
