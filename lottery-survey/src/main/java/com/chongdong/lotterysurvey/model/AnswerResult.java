@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
  * 答题表
  * @TableName tcd_answer
  */
-@TableName(value ="tcd_answer")
+@TableName(value ="tcd_answerResult")
 @Data
-public class Answer implements Serializable {
+public class AnswerResult implements Serializable {
     /**
      * 答题信息表id
      */
