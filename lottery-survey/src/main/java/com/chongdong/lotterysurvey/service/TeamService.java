@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 /**
 * @author wo
 * @description 针对表【tcd_team】的数据库操作Service
-* @createDate 2023-07-06 10:37:43
+* @createDate 2023-07-06 11:23:13
 */
 public interface TeamService extends IService<Team> {
 
