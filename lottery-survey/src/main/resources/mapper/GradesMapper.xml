@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chongdong.lotterysurvey.mapper.GradesMapper">
+
+    <resultMap id="BaseResultMap" type="com.chongdong.lotterysurvey.model.Grades">
+            <id property="gradesid" column="gradesId" jdbcType="INTEGER"/>
+            <result property="userid" column="userId" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="score" column="score" jdbcType="INTEGER"/>
+            <result property="spendtime" column="spendTime" jdbcType="VARCHAR"/>
+            <result property="regtime" column="regtime" jdbcType="TIMESTAMP"/>
+            <result property="region" column="region" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gradesId,userId,username,
+        score,spendTime,regtime,
+        region
+    </sql>
+</mapper>
