@@ -10,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-07-06 10:54:07
 */
 public interface StreetService extends IService<Street> {
-    ResponseMap listStreetByCity(Integer id);
+    ResponseMap listStreetByCity(Integer cityId);
 }
