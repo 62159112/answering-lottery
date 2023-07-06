@@ -22,9 +22,9 @@ public class IStreetService extends ServiceImpl<StreetMapper, Street>
 
     private ResponseMap responseMap = MapFactory.createMap();
     @Override
-    public ResponseMap listStreetByCity(Integer id) {
+    public ResponseMap listStreetByCity(Integer cityId) {
         QueryWrapper<Street> queryWrapper = new QueryWrapper<>();
-        List<Street> streetList = this.list(queryWrapper.eq("cityId", id));
+        List<Street> streetList = this.list(queryWrapper.eq("cityId", cityId));
         if (streetList!=null){
             responseMap.setFlag(true);
             responseMap.setData(streetList);
