@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.IUserService;
 import com.chongdong.lotterysurvey.mapper.UserMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
 * @author cd
@@ -14,7 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements IUserService {
+    @Resource
+    private UserMapper userMapper;
+    @Override
+    public Map addUserById(User user) {
 
+        return null;
+    }
 }
 
 

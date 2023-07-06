@@ -6,7 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * 用户表
@@ -15,6 +20,8 @@ import lombok.Data;
 @TableName(value ="tcd_user")
 @Data
 public class User implements Serializable {
+    public interface AddUser{}
+    public interface UpdateUser{}
     /**
      * 主键
      */
@@ -24,30 +31,44 @@ public class User implements Serializable {
     /**
      * 用户姓名
      */
+    @NotNull(message = "姓名不能为空!",groups = {AddUser.class})
+    @NotNull(message = "用户名不能为空!",groups = {UpdateUser.class})
+    @Length(min = 2,max = 12,groups = {AddUser.class})
+    @Length(min = 2,max = 12,groups = {UpdateUser.class})
     @TableField(value = "userName")
     private String userName;
 
     /**
      * 电话号码
      */
+    @NotNull(message = "电话号码不能为空!",groups = {AddUser.class})
+    @NotNull(message = "电话号码不能为空!",groups = {UpdateUser.class})
     @TableField(value = "userPhone")
     private String userPhone;
 
     /**
      * 密码
      */
+    @NotNull(message = "密码不能为空!",groups = {AddUser.class})
+    @NotNull(message = "密码不能为空!",groups = {UpdateUser.class})
     @TableField(value = "userPassword")
     private String userPassword;
 
     /**
      * 年龄
      */
+    @PositiveOrZero
+    @Max(120)
+    @NotNull(message = "年龄不能为空!",groups = {AddUser.class})
+    @NotNull(message = "年龄不能为空!",groups = {UpdateUser.class})
     @TableField(value = "userAge")
     private Integer userAge;
 
     /**
      * 区域
      */
+    @NotNull(message = "区域不能为空!",groups = {AddUser.class})
+    @NotNull(message = "区域不能为空!",groups = {UpdateUser.class})
     @TableField(value = "userRegion")
     private String userRegion;
 
