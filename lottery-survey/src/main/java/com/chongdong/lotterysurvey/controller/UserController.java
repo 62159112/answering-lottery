@@ -26,6 +26,7 @@ public class UserController {
      * */
     @PostMapping("/AddUser")
     public ResponseMap AddUser(@Validated(User.AddUser.class) @RequestBody User user){
+
         return userService.addUserById(user);
     }
     /**
@@ -36,8 +37,7 @@ public class UserController {
             @PathVariable String userPhone,
             @PathVariable String userPassword
     ){
-        ResponseMap responseMap = userService.userLongByPhone(userPhone, userPassword);
-        return responseMap;
+        return userService.userLongByPhone(userPhone, userPassword);
     }
     /**
      * 修改答题次数
