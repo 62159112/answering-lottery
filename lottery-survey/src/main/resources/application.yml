@@ -9,8 +9,6 @@ spring:
   application:
     name: order-service
 
-
-
 mybatis-plus:
   global-config:
     db-config:
