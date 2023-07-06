@@ -2,7 +2,7 @@ package com.chongdong.lotterysurvey.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.UserService;
+import com.chongdong.lotterysurvey.service.IUserService;
 import com.chongdong.lotterysurvey.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-    implements UserService{
+    implements IUserService {
 
 }
 
