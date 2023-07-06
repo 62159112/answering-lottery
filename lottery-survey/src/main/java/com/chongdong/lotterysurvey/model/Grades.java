@@ -57,6 +57,12 @@ public class Grades implements Serializable {
     @TableField(value = "region")
     private String region;
 
+    /**
+     * 答题日期（哪一天答的）
+     */
+    @TableField(value = "answerDay")
+    private Integer answerday;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
