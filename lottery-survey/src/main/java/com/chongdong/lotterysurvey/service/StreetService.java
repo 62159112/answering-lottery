@@ -11,4 +11,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface StreetService extends IService<Street> {
     ResponseMap listStreetByCity(Integer cityId);
+
+    /**
+     * 根据选择的街道id查询街道全名
+     * @param streetId 1 老城街道
+     * @return 红花岗区老城街道
+     */
+    String queryStreetFullName(Integer streetId);
 }

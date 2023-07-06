@@ -9,10 +9,11 @@
             <result property="teamname" column="teamName" jdbcType="VARCHAR"/>
             <result property="teamnumber" column="teamNumber" jdbcType="INTEGER"/>
             <result property="streetid" column="streetId" jdbcType="INTEGER"/>
+            <result property="answerday" column="answerDay" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         teamId,teamName,teamNumber,
-        streetId
+        streetId,answerDay
     </sql>
 </mapper>

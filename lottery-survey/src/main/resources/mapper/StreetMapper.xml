@@ -13,4 +13,10 @@
     <sql id="Base_Column_List">
         streetId,streetName,cityId
     </sql>
+    <select id="searchStreetFullNameByStreetId" resultType="java.lang.String">
+        select concat(c.cityName,s.streetName) as fullName
+        from tcd_street s
+            left join tcd_city c on s.streetId = c.cityId
+        where s.streetId = #{streetId}
+    </select>
 </mapper>

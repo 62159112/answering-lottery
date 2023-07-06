@@ -12,11 +12,17 @@
             <result property="spendtime" column="spendTime" jdbcType="VARCHAR"/>
             <result property="regtime" column="regtime" jdbcType="TIMESTAMP"/>
             <result property="region" column="region" jdbcType="VARCHAR"/>
+            <result property="answerday" column="answerDay" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         gradesId,userId,username,
         score,spendTime,regtime,
-        region
+        region,answerDay
     </sql>
+    <select id="searchAllByAnswerDay" resultType="java.lang.Integer">
+        select count(*)
+        from tcd_grades
+        where answerDay = #{answerDay} and region = #{region}
+    </select>
 </mapper>
