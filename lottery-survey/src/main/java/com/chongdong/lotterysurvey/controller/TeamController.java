@@ -1,17 +1,18 @@
 package com.chongdong.lotterysurvey.controller;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chongdong.lotterysurvey.model.Grades;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.Team;
 import com.chongdong.lotterysurvey.service.GradesService;
+import com.chongdong.lotterysurvey.service.StreetService;
 import com.chongdong.lotterysurvey.service.TeamService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -25,7 +26,11 @@ import java.util.List;
 @RequestMapping("/team")
 public class TeamController {
     @Resource
-    private TeamService teamService;
+    TeamService teamService;
+    @Resource
+    StreetService streetService;
+    @Resource
+    GradesService gradesService;
     @GetMapping("/{id}")
     public ResponseMap queryTeamById(@PathVariable Integer id){
         Team byId = teamService.getById(id);
@@ -45,5 +50,19 @@ public class TeamController {
         return teamNumber!=null?ResponseMap.ok().data(teamNumber):ResponseMap.error();
     }
 
+    /**
+     * 刷新团队答题人次
+     * @return 团队（地域/街道答题）信息刷新
+     */
+    @PostMapping
+    public ResponseMap add(Team team){
+        String streetFullName = streetService.queryStreetFullName(team.getStreetid());
+        // 设置答题日期（几号）
+        team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        // 设置答题人次
+        team.setTeamnumber(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName));
+        teamService.saveOrUpdate(team);
+        return ResponseMap.ok();
+    }
 
 }

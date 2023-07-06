@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     implements GradesService{
 
+    @Override
+    public Integer queryTeamNumber(Integer answerDay, String region) {
+        return baseMapper.searchAllByAnswerDay(answerDay,region);
+    }
 }
 
 
