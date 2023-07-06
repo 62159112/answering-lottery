@@ -7,6 +7,7 @@ import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.Street;
 import com.chongdong.lotterysurvey.service.StreetService;
 import com.chongdong.lotterysurvey.mapper.StreetMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,6 @@ import java.util.List;
 @Service
 public class IStreetService extends ServiceImpl<StreetMapper, Street>
     implements StreetService{
-
     private ResponseMap responseMap = MapFactory.createMap();
     @Override
     public ResponseMap listStreetByCity(Integer cityId) {
@@ -35,6 +35,11 @@ public class IStreetService extends ServiceImpl<StreetMapper, Street>
             responseMap.setMessage("查询城市街道失败！传入参数不对！");
         }
         return responseMap ;
+    }
+
+    @Override
+    public String queryStreetFullName(Integer streetId) {
+        return baseMapper.searchStreetFullNameByStreetId(streetId);
     }
 }
 

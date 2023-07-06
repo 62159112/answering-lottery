@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface StreetService extends IService<Street> {
     ResponseMap listStreetByCity(Integer cityId);
+
+    String queryStreetFullName(Integer streetId);
 }

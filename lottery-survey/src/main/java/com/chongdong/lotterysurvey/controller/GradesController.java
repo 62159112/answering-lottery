@@ -7,10 +7,7 @@ import com.chongdong.lotterysurvey.model.Grades;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.service.GradesService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,11 +26,7 @@ public class GradesController {
     @GetMapping("/{id}")
     public ResponseMap queryGradesById(@PathVariable Integer id){
         Grades byId = gradesService.getById(id);
-        ResponseMap responseMap = new ResponseMap();
-        responseMap.setData(byId);
-        responseMap.setFlag(true);
-        responseMap.setMessage("成功");
-        return responseMap;
+        return byId!=null?ResponseMap.ok().data(byId):ResponseMap.error();
     }
 
     // 总的每日个人成绩排行
@@ -57,7 +50,7 @@ public class GradesController {
 
     // 查具体某日个人成绩排行
     @GetMapping("/listAnswerDay")
-    public List<Grades> queryAllByAnswerDayOrderByScore(Integer answerDay) {
+    public ResponseMap queryAllByAnswerDayOrderByScore(Integer answerDay) {
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("userid", "username", "MAX(score) as score", "MIN(spendtime) as spendtime", "MIN(regtime) as regtime","region","answerDay")
@@ -67,13 +60,11 @@ public class GradesController {
                 .orderByAsc("spendtime")
                 .orderByAsc("regtime")
                 .eq("answerDay",answerDay);
-
         // 查询前十名成绩
-        Page<Grades> page = new Page<>(1, 20);
+        Page<Grades> page = new Page<>(1, 10);
         IPage<Grades> resultPage = gradesService.page(page, queryWrapper);
-
         // 返回查询结果
-        return resultPage.getRecords();
+        return ResponseMap.ok().data(resultPage);
     }
 
     // 查询个人所有最高分成绩
@@ -104,13 +95,18 @@ public class GradesController {
                 .orderByAsc("answerDay")
                 .orderByDesc("score")
                 .eq("username",username);
-
         // 查询前十条成绩
         Page<Grades> page = new Page<>(1, 10);
         Page<Grades> resultPage = gradesService.page(page, queryWrapper);
-
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
+    }
+    // 新增成绩
+    @PostMapping
+    public ResponseMap add(){
+        Grades grades = new Grades();
+        boolean save = gradesService.save(grades);
+        return save?ResponseMap.ok():ResponseMap.error();
     }
 
 }
