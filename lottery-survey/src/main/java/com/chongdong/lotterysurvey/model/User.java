@@ -32,7 +32,6 @@ public class User implements Serializable {
      * 用户姓名
      */
     @NotNull(message = "姓名不能为空!",groups = {AddUser.class})
-    @NotNull(message = "用户名不能为空!",groups = {UpdateUser.class})
     @Length(min = 2,max = 12,groups = {AddUser.class})
     @Length(min = 2,max = 12,groups = {UpdateUser.class})
     @TableField(value = "userName")
@@ -42,7 +41,6 @@ public class User implements Serializable {
      * 电话号码
      */
     @NotNull(message = "电话号码不能为空!",groups = {AddUser.class})
-    @NotNull(message = "电话号码不能为空!",groups = {UpdateUser.class})
     @TableField(value = "userPhone")
     private String userPhone;
 
@@ -50,7 +48,8 @@ public class User implements Serializable {
      * 密码
      */
     @NotNull(message = "密码不能为空!",groups = {AddUser.class})
-    @NotNull(message = "密码不能为空!",groups = {UpdateUser.class})
+    @Length(min = 6,max = 15,groups = {AddUser.class})
+    @Length(min = 6,max = 15,groups = {UpdateUser.class})
     @TableField(value = "userPassword")
     private String userPassword;
 
@@ -77,13 +76,16 @@ public class User implements Serializable {
     /**
      * 答题次数
      */
-
+    @PositiveOrZero
+    @Max(3)
     @TableField(value = "userNumber")
     private Integer userNumber;
 
     /**
      * 抽奖次数
      */
+    @PositiveOrZero
+    @Max(3)
     @TableField(value = "userDrawNumber")
     private Integer userDrawNumber;
 

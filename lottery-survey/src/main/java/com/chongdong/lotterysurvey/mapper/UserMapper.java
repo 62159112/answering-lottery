@@ -2,6 +2,7 @@ package com.chongdong.lotterysurvey.mapper;
 
 import com.chongdong.lotterysurvey.model.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author cd
@@ -10,7 +11,14 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.chongdong.lotterysurvey.model.User
 */
 public interface UserMapper extends BaseMapper<User> {
-
+    /**
+     * 查询电话号码
+     * */
+    User userQueryByPhone(String userPhone);
+    /**
+     * 登录long
+     * */
+    User userLongQueryPhonePassword(@Param("userPhone") String userPhone, @Param("userPassword") String userPassword);
 }
 
 

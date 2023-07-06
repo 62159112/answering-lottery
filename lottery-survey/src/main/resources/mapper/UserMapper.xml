@@ -21,4 +21,16 @@
         userPassword,userAge,userRegion,
         userNumber,userDrawNumber,createDate
     </sql>
+    <select id="userQueryByPhone" resultMap="BaseResultMap">
+        select id,userName,userPhone,
+               userPassword,userAge,userRegion,
+               userNumber,userDrawNumber,createDate
+        from tcd_user where userPhone=#{userPhone}
+    </select>
+    <select id="userLongQueryPhonePassword" resultMap="BaseResultMap">
+        select id,userName,userPhone,
+               userPassword,userAge,userRegion,
+               userNumber,userDrawNumber,createDate
+        from tcd_user where userPhone=#{userPhone} and userPassword=#{userPassword}
+    </select>
 </mapper>
