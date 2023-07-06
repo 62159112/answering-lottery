@@ -6,7 +6,9 @@ import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.mapper.AnswerResultMapper;
 import com.chongdong.lotterysurvey.model.AnswerResult;
 import com.chongdong.lotterysurvey.model.ResponseMap;
+import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.AnswerResultService;
+import com.chongdong.lotterysurvey.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,8 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
 
     private ResponseMap responseMap = MapFactory.createMap();
 
-
+    @Resource
+    private IUserService userService;
     @Resource
     private AnswerResultMapper answerResultMapper;
 
@@ -33,10 +36,14 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
         int insert = answerResultMapper.insert(answerResult);
         if (insert>=1){
             //答题次数减一
-
+            User user = userService.getById(answerResult.getUserId());
+            user.setUserNumber(user.getUserNumber()-1);
+            userService.updateById(user);
             if (answerResult.getAnswerScore()>=60){
                 //抽奖次数加一
+                user.setUserDrawNumber(user.getUserDrawNumber()+1);
             }
+            userService.updateById(user);
         }
         responseMap.setData(insert);
         responseMap.setFlag(true);

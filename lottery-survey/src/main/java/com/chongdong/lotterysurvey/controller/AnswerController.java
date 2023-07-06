@@ -32,7 +32,7 @@ public class AnswerController {
     public ResponseMap save(@RequestParam AnswerResult answerResult){
        answerResultService.add(answerResult);
 
-       return null;
+       return answerResultService.add(answerResult);
    }
 
 }
