@@ -2,6 +2,7 @@ package com.chongdong.lotterysurvey.service;
 
 import com.chongdong.lotterysurvey.model.City;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chongdong.lotterysurvey.model.ResponseMap;
 
 /**
 * @author cd
@@ -9,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-07-06 10:45:10
 */
 public interface CityService extends IService<City> {
-
+    ResponseMap listCity();
 }
