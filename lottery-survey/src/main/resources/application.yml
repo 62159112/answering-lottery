@@ -2,10 +2,9 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dcd_orderservice
+    url: jdbc:mysql://175.27.191.217:3306/dcd_answering_lottery?&useSSL=false
     username: root
-    password: 123456
+    password: MLY59420s@
   application:
     name: order-service
 
