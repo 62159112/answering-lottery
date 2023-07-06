@@ -38,6 +38,12 @@ public class Team implements Serializable {
     @TableField(value = "streetId")
     private Integer streetid;
 
+    /**
+     * 答题日期（哪天答的）
+     */
+    @TableField(value = "answerDay")
+    private Integer answerday;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
