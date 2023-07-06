@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.chongdong.lotterysurvey.model.Street
 */
 public interface StreetMapper extends BaseMapper<Street> {
-
+    String searchStreetFullNameByStreetId(Integer streetId);
 }
 
 

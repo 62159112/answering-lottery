@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 * @createDate 2023-07-06 13:01:56
 */
 @Service
-public class GradesServiceImpl extends ServiceImpl<GradesMapper, Grades>
+public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     implements GradesService{
 
 }
