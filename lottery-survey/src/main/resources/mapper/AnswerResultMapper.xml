@@ -9,8 +9,7 @@
             <result property="answerScore" column="answerScore" jdbcType="INTEGER"/>
             <result property="userId" column="userId" jdbcType="INTEGER"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="endTime" column="endTime" jdbcType="TIMESTAMP"/>
-            <result property="answerSequence" column="answerSequence" jdbcType="INTEGER"/>
+            <result property="answerTime" column="answerTime" jdbcType="INTEGER"/>
 
     </resultMap>
 

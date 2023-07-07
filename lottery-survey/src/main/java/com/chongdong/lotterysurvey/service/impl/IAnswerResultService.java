@@ -30,8 +30,8 @@ import java.util.Map;
 * @createDate 2023-07-06 14:50:26
 */
 @Service
-public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, AnswerResult>
-    implements AnswerResultService {
+public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, AnswerResult>
+    implements com.chongdong.lotterysurvey.service.AnswerResultService {
 
     private ResponseMap responseMap = MapFactory.createMap();
 
@@ -65,20 +65,8 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
         }
         userService.updateById(user);
 
-        //今天答题次数
-        Date date = new Date();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYY-MM-dd");
-        String format = dateFormat.format(date);
-        QueryWrapper<AnswerResult> wrapper = new QueryWrapper<>();
-        wrapper.eq("userId",id).like("createTime",format);
-        int aLong = answerResultMapper.selectCount(wrapper).intValue();
-        System.out.println(aLong+"dddddddddddddddddddd");
-        if (aLong<3){
-            //今天答题次数+1
-          answerResult.setAnswerSequence(aLong+1);
-        }
         //结束时间
-        answerResult.setEndTime(LocalDateTime.now());
+        answerResult.setCreateTime(LocalDateTime.now());
 
         answerResult.setCreateTime(LocalDateTime.now());
         //添加答题结果

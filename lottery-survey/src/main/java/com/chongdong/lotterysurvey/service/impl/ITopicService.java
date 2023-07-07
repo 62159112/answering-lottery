@@ -27,7 +27,7 @@ import java.util.List;
 * @createDate 2023-07-06 15:51:53
 */
 @Service
-public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic>
+public class ITopicService extends ServiceImpl<TopicMapper, Topic>
     implements TopicService{
 
     private ResponseMap responseMap = MapFactory.createMap();
