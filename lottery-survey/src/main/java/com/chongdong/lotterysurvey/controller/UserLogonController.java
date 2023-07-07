@@ -5,7 +5,9 @@ import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +23,12 @@ public class UserLogonController {
     public ResponseMap userByLong(
             @PathVariable String userPhone,
             @PathVariable String userPassword,
-            HttpServletResponse response
+            HttpServletResponse response,
+            HttpSession session
     ){
         ResponseMap responseMap = userService.userLongByPhone(userPhone, userPassword);
         User user = (User)responseMap.getData();
+
         Cookie cookieId=new Cookie("userId",String.valueOf(user.getId()));
         Cookie cookiePhone=new Cookie("userPhone",user.getUserPhone());
         Cookie cookiePassword=new Cookie("userPassword",user.getUserPassword());

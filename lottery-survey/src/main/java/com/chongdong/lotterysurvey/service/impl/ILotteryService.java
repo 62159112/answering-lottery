@@ -6,9 +6,9 @@ import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.model.Lottery;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.IUserService;
 import com.chongdong.lotterysurvey.service.LotteryService;
 import com.chongdong.lotterysurvey.mapper.LotteryMapper;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
     private final DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Resource
-    private IUserService userService;
+    private UserService userService;
 
     @Override
     public ResponseMap getResult(Integer userId) {

@@ -17,6 +17,7 @@ public class UserController {
     public ResponseMap deleteUserId(@PathVariable Integer id){
         return userService.deleteByUserId(id);
     }
+
     /**
      * 修改答题次数
      * */
