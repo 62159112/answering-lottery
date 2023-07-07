@@ -57,28 +57,31 @@ public class TeamController {
     // TODO: 2023/7/7  
     @PostMapping
     public ResponseMap add(Team team){
-        if (teamService.queryTeamExit(team.getAnswerday(),team.getTeamname())<1){
+        if (teamService.queryTeamExit(team.getAnswerday(),team.getStreetid())<1){
             // 添加团队
             String streetFullName = streetService.queryStreetFullName(team.getStreetid());
             // 设置答题日期（几号）
+            team.setTeamname(streetFullName);
             team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
             // 设置答题人次
             team.setTeamnumber(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName));
             boolean save = teamService.save(team);
-            return save?ResponseMap.ok().message("添加成功") :ResponseMap.error().message("添加失败");
+            return save?ResponseMap.ok().message("添加成功").data(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName)) :ResponseMap.error().message("添加失败");
         }else {
             // 更新团队
             String streetFullName = streetService.queryStreetFullName(team.getStreetid());
             // 设置答题日期（几号）
+            team.setTeamname(streetFullName);
             team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
             // 设置答题人次
+            System.out.println(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName));
             team.setTeamnumber(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName));
             QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("answerDay",team.getAnswerday());
-            queryWrapper.eq("teamName",team.getTeamname());
+            queryWrapper.eq("teamName",streetFullName);
             queryWrapper.eq("streetId",team.getStreetid());
             boolean update = teamService.update(team, queryWrapper);
-            return update?ResponseMap.ok().message("更新成功") :ResponseMap.error().message("更新失败");
+            return update?ResponseMap.ok().message("更新成功").data(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName)) :ResponseMap.error().message("更新失败");
         }
     }
 

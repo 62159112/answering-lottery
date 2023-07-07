@@ -52,7 +52,7 @@ public class GradesController {
                 .orderByAsc("regtime");
 
         // 查询前十名成绩
-        Page<Grades> page = new Page<>(1, 20);
+        Page<Grades> page = new Page<>(1, 50);
         Page<Grades> resultPage = gradesService.page(page, queryWrapper);
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
@@ -71,7 +71,7 @@ public class GradesController {
                 .orderByAsc("regtime")
                 .eq("answerDay",answerDay);
         // 查询前十名成绩
-        Page<Grades> page = new Page<>(1, 10);
+        Page<Grades> page = new Page<>(1, 50);
         IPage<Grades> resultPage = gradesService.page(page, queryWrapper);
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
@@ -105,7 +105,7 @@ public class GradesController {
                 .orderByDesc("score")
                 .eq("username",username);
         // 查询前十条成绩
-        Page<Grades> page = new Page<>(1, 10);
+        Page<Grades> page = new Page<>(1, 30);
         Page<Grades> resultPage = gradesService.page(page, queryWrapper);
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);

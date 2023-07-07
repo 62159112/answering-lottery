@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 public class ITeamService extends ServiceImpl<TeamMapper, Team>
     implements TeamService{
     @Override
-    public Integer queryTeamExit(Integer answerDay, String teamName) {
-        return baseMapper.searchAllByAnswerdayAndStreetid(answerDay, teamName);
+    public Integer queryTeamExit(Integer answerDay, Integer streetId) {
+        return baseMapper.searchAllByAnswerdayAndStreetid(answerDay, streetId);
     }
 }
 
