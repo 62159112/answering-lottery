@@ -86,7 +86,6 @@ public class GradesController {
         // 查询前十条成绩
         Page<Grades> page = new Page<>(1, 10);
         Page<Grades> resultPage = gradesService.page(page, queryWrapper);
-
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
@@ -105,10 +104,11 @@ public class GradesController {
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
-    // 新增成绩
+    // 刷新
     @PostMapping
-    public ResponseMap add(Grades grades){
+    public ResponseMap flushed(){
         // 设置注册时间
+        Grades grades = new Grades();
         User user = userService.getOne(new QueryWrapper<User>().eq("id", grades.getUserid()));
         grades.setRegtime(user.getCreateDate());
         grades.setUsername(user.getUserName());
