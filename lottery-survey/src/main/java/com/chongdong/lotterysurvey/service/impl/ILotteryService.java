@@ -7,15 +7,16 @@ import com.chongdong.lotterysurvey.model.Lottery;
 import com.chongdong.lotterysurvey.model.Prize;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.IUserService;
 import com.chongdong.lotterysurvey.service.LotteryService;
 import com.chongdong.lotterysurvey.mapper.LotteryMapper;
 import com.chongdong.lotterysurvey.service.PrizeService;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +36,7 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
     private final DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Resource
-    private IUserService userService;
+    private UserService userService;
 
     @Resource
     private PrizeService prizeService;
@@ -166,6 +167,16 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
         }else {
             return addLottery();
         }
+    }
+
+    @Override
+    public ResponseMap residueLottery() throws ParseException {
+        Date lastDay = simpleDateFormat.parse("2023-7-16");
+        Lottery lastLottery = this.getOne(new QueryWrapper<Lottery>().eq("activityTime", simpleDateFormat.format(lastDay)));
+        responseMap.setFlag(true);
+        responseMap.setData(lastLottery);
+        responseMap.setMessage("查询最后一日剩余红包数成功！");
+        return responseMap;
     }
 }
 

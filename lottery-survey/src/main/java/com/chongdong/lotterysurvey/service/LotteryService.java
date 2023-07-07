@@ -4,6 +4,8 @@ import com.chongdong.lotterysurvey.model.Lottery;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 
+import java.text.ParseException;
+
 /**
 * @author cd
 * @description 针对表【tcd_lottery】的数据库操作Service
@@ -17,4 +19,6 @@ public interface LotteryService extends IService<Lottery> {
     Boolean addLottery();
 
     Boolean addLotteryFirst();
+
+    ResponseMap residueLottery() throws ParseException;
 }

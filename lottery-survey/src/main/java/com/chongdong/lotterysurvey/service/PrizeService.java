@@ -16,4 +16,7 @@ public interface PrizeService extends IService<Prize> {
 
     ResponseMap getPrize(Integer userId);
 
+    ResponseMap listPrize(Integer page,Integer size);
+
+    ResponseMap payPrize(Integer userId);
 }
