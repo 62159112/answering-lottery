@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
 * @author cd
 * @description 针对表【tcd_prize(奖励表)】的数据库操作Mapper
-* @createDate 2023-07-07 11:06:16
+* @createDate 2023-07-07 16:43:39
 * @Entity com.chongdong.lotterysurvey.model.Prize
 */
 public interface PrizeMapper extends BaseMapper<Prize> {
