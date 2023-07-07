@@ -8,15 +8,23 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
+ * 市区表
  * @TableName tcd_city
  */
 @TableName(value ="tcd_city")
 @Data
 public class City implements Serializable {
-    @TableId("cityId")
+    /**
+     * 市区id
+     */
+    @TableId(type = IdType.AUTO)
     private Integer cityid;
 
+    /**
+     * 市区名称
+     */
     private String cityname;
 
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

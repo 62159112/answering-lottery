@@ -1,3 +1,4 @@
+/*
 package com.chongdong.lotterysurvey.config;
 
 import com.chongdong.lotterysurvey.interceptor.UserInterceptor;
@@ -14,3 +15,4 @@ public class ManageInterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/logon/user/{userPhone}/{userPassword}","/logon/AddUser");
     }
 }
+*/

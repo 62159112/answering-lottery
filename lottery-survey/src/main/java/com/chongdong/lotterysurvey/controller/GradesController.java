@@ -9,7 +9,7 @@ import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.AnswerResultService;
 import com.chongdong.lotterysurvey.service.GradesService;
-import com.chongdong.lotterysurvey.service.IUserService;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public class GradesController {
     @Resource
     private GradesService gradesService;
     @Resource
-    IUserService userService;
+    UserService userService;
     @Resource
     AnswerResultService answerResultService;
     @GetMapping("/{id}")

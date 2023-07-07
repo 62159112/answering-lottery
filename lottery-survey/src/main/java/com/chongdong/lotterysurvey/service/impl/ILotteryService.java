@@ -55,10 +55,10 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setFlag(true);
                         responseMap.setData("恭喜抽中一等奖！");
                         responseMap.setMessage("抽奖成功!");
+                        prize.setPrize(prize.getPrize().add(new BigDecimal(2)));
+                        prizeService.updateById(prize);
                         lottery.setPrizethree(lottery.getPrizethree()-1);
                         saveOrUpdate(lottery);
-                        prize.setPrize(prize.getPrize().add(new BigDecimal(2)));
-                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -69,10 +69,10 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setFlag(true);
                         responseMap.setData("恭喜抽中二等奖！");
                         responseMap.setMessage("抽奖成功!");
+                        prize.setPrize(prize.getPrize().add(new BigDecimal(1)));
+                        prizeService.updateById(prize);
                         lottery.setPrizethree(lottery.getPrizetwo()-1);
                         saveOrUpdate(lottery);
-                        prize.setPrize(prize.getPrize().add(new BigDecimal(1)));
-                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -83,10 +83,10 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setFlag(true);
                         responseMap.setData("恭喜抽中三等奖！");
                         responseMap.setMessage("抽奖成功!");
+                        prize.setPrize(prize.getPrize().add(new BigDecimal("0.3")));
+                        prizeService.updateById(prize);
                         lottery.setPrizethree(lottery.getPrizeone()-1);
                         saveOrUpdate(lottery);
-                        prize.setPrize(prize.getPrize().add(new BigDecimal("0.3")));
-                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -97,6 +97,8 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                     responseMap.setData("谢谢参与！");
                     responseMap.setMessage("抽奖成功!");
                 }
+                user.setUserDrawNumber(user.getUserDrawNumber()-1);
+                userService.saveOrUpdate(user);
             }
         }else {
             responseMap.setFlag(false);

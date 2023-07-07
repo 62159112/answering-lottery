@@ -9,21 +9,38 @@ import java.util.Date;
 import lombok.Data;
 
 /**
+ * 
  * @TableName tcd_lottery
  */
 @TableName(value ="tcd_lottery")
 @Data
 public class Lottery implements Serializable {
-    @TableId("lotteryId")
+    /**
+     * 抽奖id
+     */
+    @TableId(type = IdType.AUTO)
     private Integer lotteryid;
 
+    /**
+     * 奖品1余量
+     */
     private Integer prizeone;
 
+    /**
+     * 奖品2余量
+     */
     private Integer prizetwo;
 
+    /**
+     * 奖品3余量
+     */
     private Integer prizethree;
 
+    /**
+     * 活动时间
+     */
     private Date activitytime;
 
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
