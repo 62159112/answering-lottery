@@ -2,6 +2,7 @@ package com.chongdong.lotterysurvey;
 
 import com.chongdong.lotterysurvey.service.GradesService;
 import com.chongdong.lotterysurvey.service.StreetService;
+import com.chongdong.lotterysurvey.service.TeamService;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ class LotterySurveyApplicationTests {
     StreetService streetService;
     @Resource
     GradesService gradesService;
+    @Resource
+    TeamService teamService;
 
     @Test
     void contextLoads() {
@@ -26,6 +29,11 @@ class LotterySurveyApplicationTests {
     @Test
     void test1(){
         Integer teamNumber = gradesService.queryTeamNumber(1, "红花岗区老城街道");
+        System.out.println(teamNumber);
+    }
+    @Test
+    void test2(){
+        Integer teamNumber = teamService.queryTeamExit(6, "红花岗区老城街道");
         System.out.println(teamNumber);
     }
 

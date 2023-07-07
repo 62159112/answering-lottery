@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chongdong.lotterysurvey.mapper.TopicMapper">
+
+    <resultMap id="BaseResultMap" type="com.chongdong.lotterysurvey.model.Topic">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="topicContent" column="topic_content" jdbcType="VARCHAR"/>
+            <result property="optionsA" column="options_a" jdbcType="VARCHAR"/>
+            <result property="optionsB" column="options_b" jdbcType="VARCHAR"/>
+            <result property="optionsC" column="options_c" jdbcType="VARCHAR"/>
+            <result property="optionsD" column="options_d" jdbcType="VARCHAR"/>
+            <result property="answer" column="answer" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,topic_content,options_a,
+        options_b,options_c,options_d
+    </sql>
+</mapper>

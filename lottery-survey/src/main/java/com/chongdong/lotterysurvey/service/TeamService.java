@@ -9,5 +9,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-07-06 13:01:56
 */
 public interface TeamService extends IService<Team> {
-
+    Integer queryTeamExit(Integer answerDay,String teamName);
 }

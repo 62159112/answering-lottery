@@ -56,13 +56,29 @@ public class TeamController {
      */
     @PostMapping
     public ResponseMap add(Team team){
-        String streetFullName = streetService.queryStreetFullName(team.getStreetid());
-        // 设置答题日期（几号）
-        team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        // 设置答题人次
-        team.setTeamnumber(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName));
-        teamService.saveOrUpdate(team);
-        return ResponseMap.ok();
+        if (teamService.queryTeamExit(team.getAnswerday(),team.getTeamname())<1){
+            // 添加团队
+            String streetFullName = streetService.queryStreetFullName(team.getStreetid());
+            // 设置答题日期（几号）
+            team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            // 设置答题人次
+            team.setTeamnumber(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName));
+            boolean save = teamService.save(team);
+            return save?ResponseMap.ok().message("添加成功") :ResponseMap.error().message("添加失败");
+        }else {
+            // 更新团队
+            String streetFullName = streetService.queryStreetFullName(team.getStreetid());
+            // 设置答题日期（几号）
+            team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            // 设置答题人次
+            team.setTeamnumber(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName));
+            QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("answerDay",team.getAnswerday());
+            queryWrapper.eq("teamName",team.getTeamname());
+            queryWrapper.eq("streetId",team.getStreetid());
+            boolean update = teamService.update(team, queryWrapper);
+            return update?ResponseMap.ok().message("更新成功") :ResponseMap.error().message("更新失败");
+        }
     }
 
 }
