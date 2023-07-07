@@ -6,14 +6,16 @@
 
     <resultMap id="BaseResultMap" type="com.chongdong.lotterysurvey.model.AnswerResult">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="answerScore" column="answer_score" jdbcType="INTEGER"/>
+            <result property="answerScore" column="answerScore" jdbcType="INTEGER"/>
             <result property="userId" column="userId" jdbcType="INTEGER"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="endTime" column="endTime" jdbcType="TIMESTAMP"/>
+            <result property="answerSequence" column="answerSequence" jdbcType="INTEGER"/>
+
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,answer_score,userId,
+        id,answerScore,userId,
         createTime,endTime
     </sql>
 </mapper>

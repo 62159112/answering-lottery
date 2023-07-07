@@ -29,8 +29,8 @@ public class AnswerController {
     }
 
    @PostMapping("/save")
-    public ResponseMap save(@RequestParam AnswerResult answerResult){
-       answerResultService.add(answerResult);
+    public ResponseMap save(AnswerResult answerResult){
+
 
        return answerResultService.add(answerResult);
    }
