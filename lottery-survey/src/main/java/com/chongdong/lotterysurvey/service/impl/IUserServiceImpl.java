@@ -141,6 +141,29 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper, User>
         return responseMap;
     }
 
+
+    /**
+     * 分享朋友圈添加答题次数
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseMap updateUserNumber(Integer id) {
+        User user = userMapper.selectById(id);
+        user.setUserNumber(user.getUserNumber()+1);
+        int num = userMapper.updateById(user);
+        if(num==0){
+            responseMap.setFlag(false);
+            responseMap.setFlag(null);
+            responseMap.setMessage("修改失败!");
+        }else {
+            responseMap.setFlag(true);
+            responseMap.setData(null);
+            responseMap.setMessage("修改成功");
+        }
+        return responseMap;
+    }
+
 }
 
 

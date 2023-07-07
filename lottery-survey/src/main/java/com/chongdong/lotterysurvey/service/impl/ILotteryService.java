@@ -7,15 +7,16 @@ import com.chongdong.lotterysurvey.model.Lottery;
 import com.chongdong.lotterysurvey.model.Prize;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.UserService;
 import com.chongdong.lotterysurvey.service.LotteryService;
 import com.chongdong.lotterysurvey.mapper.LotteryMapper;
 import com.chongdong.lotterysurvey.service.PrizeService;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,10 +57,10 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setFlag(true);
                         responseMap.setData("恭喜抽中一等奖！");
                         responseMap.setMessage("抽奖成功!");
+                        prize.setPrize(prize.getPrize().add(new BigDecimal(2)));
+                        prizeService.updateById(prize);
                         lottery.setPrizethree(lottery.getPrizethree()-1);
                         saveOrUpdate(lottery);
-                        prize.setPrize(prize.getPrize().add(new BigDecimal(2)));
-                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -70,10 +71,10 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setFlag(true);
                         responseMap.setData("恭喜抽中二等奖！");
                         responseMap.setMessage("抽奖成功!");
+                        prize.setPrize(prize.getPrize().add(new BigDecimal(1)));
+                        prizeService.updateById(prize);
                         lottery.setPrizethree(lottery.getPrizetwo()-1);
                         saveOrUpdate(lottery);
-                        prize.setPrize(prize.getPrize().add(new BigDecimal(1)));
-                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -84,10 +85,10 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setFlag(true);
                         responseMap.setData("恭喜抽中三等奖！");
                         responseMap.setMessage("抽奖成功!");
+                        prize.setPrize(prize.getPrize().add(new BigDecimal("0.3")));
+                        prizeService.updateById(prize);
                         lottery.setPrizethree(lottery.getPrizeone()-1);
                         saveOrUpdate(lottery);
-                        prize.setPrize(prize.getPrize().add(new BigDecimal("0.3")));
-                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -98,6 +99,8 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                     responseMap.setData("谢谢参与！");
                     responseMap.setMessage("抽奖成功!");
                 }
+                user.setUserDrawNumber(user.getUserDrawNumber()-1);
+                userService.saveOrUpdate(user);
             }
         }else {
             responseMap.setFlag(false);
@@ -166,6 +169,16 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
         }else {
             return addLottery();
         }
+    }
+
+    @Override
+    public ResponseMap residueLottery() throws ParseException {
+        Date lastDay = simpleDateFormat.parse("2023-7-16");
+        Lottery lastLottery = this.getOne(new QueryWrapper<Lottery>().eq("activityTime", simpleDateFormat.format(lastDay)));
+        responseMap.setFlag(true);
+        responseMap.setData(lastLottery);
+        responseMap.setMessage("查询最后一日剩余红包数成功！");
+        return responseMap;
     }
 }
 
