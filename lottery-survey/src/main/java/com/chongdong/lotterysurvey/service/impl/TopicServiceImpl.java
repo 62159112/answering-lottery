@@ -8,9 +8,9 @@ import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.Topic;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.IUserService;
 import com.chongdong.lotterysurvey.service.TopicService;
 import com.chongdong.lotterysurvey.mapper.TopicMapper;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic>
 
     private ResponseMap responseMap = MapFactory.createMap();
     @Resource
-    IUserService userService;
+    UserService userService;
 
 
     @Override
