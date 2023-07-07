@@ -9,7 +9,7 @@
             <result property="userid" column="userId" jdbcType="INTEGER"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="score" column="score" jdbcType="INTEGER"/>
-            <result property="spendtime" column="spendTime" jdbcType="VARCHAR"/>
+            <result property="spendtime" column="spendTime" jdbcType="INTEGER"/>
             <result property="regtime" column="regtime" jdbcType="TIMESTAMP"/>
             <result property="region" column="region" jdbcType="VARCHAR"/>
             <result property="answerday" column="answerDay" jdbcType="INTEGER"/>

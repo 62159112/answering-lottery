@@ -3,12 +3,17 @@ package com.chongdong.lotterysurvey.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.chongdong.lotterysurvey.model.AnswerResult;
 import com.chongdong.lotterysurvey.model.Grades;
 import com.chongdong.lotterysurvey.model.ResponseMap;
+import com.chongdong.lotterysurvey.model.User;
+import com.chongdong.lotterysurvey.service.AnswerResultService;
 import com.chongdong.lotterysurvey.service.GradesService;
+import com.chongdong.lotterysurvey.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -23,6 +28,10 @@ import java.util.List;
 public class GradesController {
     @Resource
     private GradesService gradesService;
+    @Resource
+    IUserService userService;
+    @Resource
+    AnswerResultService answerResultService;
     @GetMapping("/{id}")
     public ResponseMap queryGradesById(@PathVariable Integer id){
         Grades byId = gradesService.getById(id);
@@ -82,7 +91,6 @@ public class GradesController {
         // 查询前十条成绩
         Page<Grades> page = new Page<>(1, 10);
         Page<Grades> resultPage = gradesService.page(page, queryWrapper);
-
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
@@ -101,10 +109,21 @@ public class GradesController {
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
-    // 新增成绩
+    // 刷新
     @PostMapping
-    public ResponseMap add(){
+    public ResponseMap flushed(){
+        // 设置注册时间
         Grades grades = new Grades();
+        User user = userService.getOne(new QueryWrapper<User>().eq("id", grades.getUserid()));
+        QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userId", grades.getUserid()).eq("answerSequence",1);
+        AnswerResult answerResult = answerResultService.getOne(queryWrapper);
+        grades.setRegtime(user.getCreateDate());
+        grades.setUsername(user.getUserName());
+        grades.setRegion(user.getUserRegion());
+        grades.setSpendtime(answerResultService.searchSpendTimeById(1));
+        grades.setScore(answerResult.getAnswerScore());
+        grades.setAnswerday(1);
         boolean save = gradesService.save(grades);
         return save?ResponseMap.ok():ResponseMap.error();
     }

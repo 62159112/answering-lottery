@@ -18,4 +18,9 @@
         id,answerScore,userId,
         createTime,endTime
     </sql>
+    <select id="searchSpendTimeById" resultType="java.lang.String">
+        select TIMEDIFF(createTime, endTime) as timediff
+        from tcd_answerResult
+        where id = #{id};
+    </select>
 </mapper>
