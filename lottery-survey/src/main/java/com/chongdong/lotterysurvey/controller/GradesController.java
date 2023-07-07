@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.lotterysurvey.model.Grades;
 import com.chongdong.lotterysurvey.model.ResponseMap;
+import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.GradesService;
+import com.chongdong.lotterysurvey.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,8 @@ import java.util.List;
 public class GradesController {
     @Resource
     private GradesService gradesService;
+    @Resource
+    IUserService userService;
     @GetMapping("/{id}")
     public ResponseMap queryGradesById(@PathVariable Integer id){
         Grades byId = gradesService.getById(id);
@@ -103,8 +107,12 @@ public class GradesController {
     }
     // 新增成绩
     @PostMapping
-    public ResponseMap add(){
-        Grades grades = new Grades();
+    public ResponseMap add(Grades grades){
+        // 设置注册时间
+        User user = userService.getOne(new QueryWrapper<User>().eq("id", grades.getUserid()));
+        grades.setRegtime(user.getCreateDate());
+        grades.setUsername(user.getUserName());
+        grades.setRegion(user.getUserRegion());
         boolean save = gradesService.save(grades);
         return save?ResponseMap.ok():ResponseMap.error();
     }
