@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.model.Lottery;
+import com.chongdong.lotterysurvey.model.Prize;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.LotteryService;
 import com.chongdong.lotterysurvey.mapper.LotteryMapper;
+import com.chongdong.lotterysurvey.service.PrizeService;
 import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -34,9 +36,14 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
     @Resource
     private UserService userService;
 
+    @Resource
+    private PrizeService prizeService;
+
     @Override
     public ResponseMap getResult(Integer userId) {
         User user = userService.getById(userId);
+        prizeService.userEmpty(userId);
+        Prize prize = prizeService.getOne(new QueryWrapper<Prize>().eq("userId", userId));
         ResponseMap resultMap = getLottery();
         if (user.getUserDrawNumber()>0){
             if (resultMap.getFlag()){
@@ -50,6 +57,8 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setMessage("抽奖成功!");
                         lottery.setPrizethree(lottery.getPrizethree()-1);
                         saveOrUpdate(lottery);
+                        prize.setPrize(prize.getPrize().add(new BigDecimal(2)));
+                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -62,6 +71,8 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setMessage("抽奖成功!");
                         lottery.setPrizethree(lottery.getPrizetwo()-1);
                         saveOrUpdate(lottery);
+                        prize.setPrize(prize.getPrize().add(new BigDecimal(1)));
+                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -74,6 +85,8 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setMessage("抽奖成功!");
                         lottery.setPrizethree(lottery.getPrizeone()-1);
                         saveOrUpdate(lottery);
+                        prize.setPrize(prize.getPrize().add(new BigDecimal("0.3")));
+                        prizeService.saveOrUpdate(prize);
                     }else {
                         responseMap.setFlag(true);
                         responseMap.setData("谢谢参与！");
@@ -87,10 +100,9 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
             }
         }else {
             responseMap.setFlag(false);
-            responseMap.setData("用户无抽奖次数，请答题获取抽奖次数！");
+            responseMap.setData("用户无抽奖次数或该用户不存在，请答题获取抽奖次数！");
             responseMap.setMessage("抽奖失败!");
         }
-
         return responseMap;
     }
 
@@ -127,8 +139,8 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
         calendar.setTime(new Date());
         calendar.add(Calendar.DAY_OF_MONTH,-1);
         Date yesterday = calendar.getTime();
-        Lottery yesterdayLottery = this.getOne(queryWrapper.eq("activityTime", simpleDateFormat.format(yesterday)));
-        Lottery lottery = this.getOne(queryWrapper.eq("activityTime", simpleDateFormat.format(new Date())));
+        Lottery yesterdayLottery = this.getOne(new QueryWrapper<Lottery>().eq("activityTime", simpleDateFormat.format(yesterday)));
+        Lottery lottery = this.getOne(new QueryWrapper<Lottery>().eq("activityTime", simpleDateFormat.format(new Date())));
         if (yesterdayLottery!=null){
             if (yesterdayLottery.getPrizeone()!=0 && yesterdayLottery.getPrizeone()!=null){
                 lottery.setPrizeone(yesterdayLottery.getPrizeone());
@@ -142,16 +154,28 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                 lottery.setPrizethree(yesterdayLottery.getPrizethree());
                 yesterdayLottery.setPrizethree(0);
             }
-        }
-        if (saveOrUpdate(yesterdayLottery)){
-            if (this.saveOrUpdate(lottery)){
-                return addLottery();
+            if (saveOrUpdate(yesterdayLottery)){
+                if (this.saveOrUpdate(lottery)){
+                    return addLottery();
+                }else {
+                    return false;
+                }
             }else {
                 return false;
             }
         }else {
-            return false;
+            return addLottery();
         }
+    }
+
+    @Override
+    public ResponseMap residueLottery() throws ParseException {
+        Date lastDay = simpleDateFormat.parse("2023-7-16");
+        Lottery lastLottery = this.getOne(new QueryWrapper<Lottery>().eq("activityTime", simpleDateFormat.format(lastDay)));
+        responseMap.setFlag(true);
+        responseMap.setData(lastLottery);
+        responseMap.setMessage("查询最后一日剩余红包数成功！");
+        return responseMap;
     }
 }
 
