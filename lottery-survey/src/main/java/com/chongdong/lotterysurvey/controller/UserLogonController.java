@@ -23,12 +23,10 @@ public class UserLogonController {
     public ResponseMap userByLong(
             @PathVariable String userPhone,
             @PathVariable String userPassword,
-            HttpServletResponse response,
-            HttpSession session
+            HttpServletResponse response
     ){
         ResponseMap responseMap = userService.userLongByPhone(userPhone, userPassword);
         User user = (User)responseMap.getData();
-
         Cookie cookieId=new Cookie("userId",String.valueOf(user.getId()));
         Cookie cookiePhone=new Cookie("userPhone",user.getUserPhone());
         Cookie cookiePassword=new Cookie("userPassword",user.getUserPassword());
