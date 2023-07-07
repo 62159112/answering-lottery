@@ -20,4 +20,9 @@
         score,spendTime,regtime,
         region,answerDay
     </sql>
+    <select id="searchAllByAnswerDay" resultType="java.lang.Integer">
+        select count(*)
+        from tcd_grades
+        where answerDay = #{answerDay} and region = #{region}
+    </select>
 </mapper>
