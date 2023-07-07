@@ -19,5 +19,4 @@ public interface AnswerResultService extends IService<AnswerResult> {
 
     ResponseMap selectScore(HttpServletRequest request);
 
-    Integer searchSpendTimeById(Integer id);
 }

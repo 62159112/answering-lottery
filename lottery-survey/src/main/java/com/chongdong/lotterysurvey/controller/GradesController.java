@@ -14,6 +14,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -109,21 +110,24 @@ public class GradesController {
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
-    // 刷新
+    // TODO: 2023/7/7  刷新
     @PostMapping
     public ResponseMap flushed(){
         // 设置注册时间
         Grades grades = new Grades();
-        User user = userService.getOne(new QueryWrapper<User>().eq("id", grades.getUserid()));
+        User user = userService.getOne(new QueryWrapper<User>().eq("id", 2));
         QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userId", grades.getUserid()).eq("answerSequence",1);
+        queryWrapper.eq("userId", 2);
+        queryWrapper.eq("answerSequence",1);
+        queryWrapper.between("createTime", LocalDate.now(),LocalDate.now().plusDays(1));
         AnswerResult answerResult = answerResultService.getOne(queryWrapper);
         grades.setRegtime(user.getCreateDate());
         grades.setUsername(user.getUserName());
         grades.setRegion(user.getUserRegion());
-        grades.setSpendtime(answerResultService.searchSpendTimeById(1));
+        grades.setUserid(2);
+        grades.setSpendtime(111);
         grades.setScore(answerResult.getAnswerScore());
-        grades.setAnswerday(1);
+        grades.setAnswerday(answerResult.getCreateTime().getDayOfMonth());
         boolean save = gradesService.save(grades);
         return save?ResponseMap.ok():ResponseMap.error();
     }
