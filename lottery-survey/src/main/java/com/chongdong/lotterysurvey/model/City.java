@@ -13,6 +13,7 @@ import lombok.Data;
 @TableName(value ="tcd_city")
 @Data
 public class City implements Serializable {
+    @TableId("cityId")
     private Integer cityid;
 
     private String cityname;
