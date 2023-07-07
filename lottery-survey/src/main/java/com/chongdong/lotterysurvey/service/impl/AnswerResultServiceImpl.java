@@ -71,6 +71,16 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
         responseMap.setMessage("答题成绩添加成功！");
         return responseMap;
     }
+
+    @Override
+    public Integer searchSpendTimeById(Integer id) {
+        String time = baseMapper.searchSpendTimeById(id);
+        String[] my =time.split(":");
+        int hour =Integer.parseInt(my[0]);
+        int min =Integer.parseInt(my[1]);
+        int sec =Integer.parseInt(my[2]);
+        return hour* 3600 +min* 60 +sec;
+    }
 }
 
 
