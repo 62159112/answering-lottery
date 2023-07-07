@@ -43,7 +43,7 @@ public class Grades implements Serializable {
      * 用时（答题花费时间）
      */
     @TableField(value = "spendTime")
-    private String spendtime;
+    private Integer spendtime;
 
     /**
      * 注册时间

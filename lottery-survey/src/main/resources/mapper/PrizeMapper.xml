@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chongdong.lotterysurvey.mapper.PrizeMapper">
+
+    <resultMap id="BaseResultMap" type="com.chongdong.lotterysurvey.model.Prize">
+            <id property="prizeid" column="prizeId" jdbcType="INTEGER"/>
+            <result property="userid" column="userId" jdbcType="INTEGER"/>
+            <result property="prize" column="prize" jdbcType="DECIMAL"/>
+            <result property="userphone" column="userPhone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        prizeId,userId,prize,
+        userPhone
+    </sql>
+</mapper>

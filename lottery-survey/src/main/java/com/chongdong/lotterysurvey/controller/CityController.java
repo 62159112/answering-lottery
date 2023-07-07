@@ -17,4 +17,9 @@ public class CityController {
     public ResponseMap listCity(){
         return cityService.listCity();
     }
+
+    @GetMapping("/123")
+    public String test(){
+        return "test";
+    }
 }

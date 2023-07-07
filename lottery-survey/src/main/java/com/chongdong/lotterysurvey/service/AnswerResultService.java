@@ -1,11 +1,9 @@
 package com.chongdong.lotterysurvey.service;
 
 
-import cn.hutool.http.server.HttpServerRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chongdong.lotterysurvey.model.AnswerResult;
 import com.chongdong.lotterysurvey.model.ResponseMap;
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
 * @author cd
@@ -19,4 +17,6 @@ public interface AnswerResultService extends IService<AnswerResult> {
     ResponseMap add(AnswerResult answerResult, HttpServletRequest request);
 
     ResponseMap selectScore(HttpServletRequest request);
+    ResponseMap add(AnswerResult answerResult);
+    Integer searchSpendTimeById(Integer id);
 }
