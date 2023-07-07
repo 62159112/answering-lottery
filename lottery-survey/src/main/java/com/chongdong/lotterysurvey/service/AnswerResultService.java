@@ -15,5 +15,5 @@ public interface AnswerResultService extends IService<AnswerResult> {
 
 
     ResponseMap add(AnswerResult answerResult);
-    Integer searchSpendTimeById(Integer id);
+    Integer searchSpendTimeById(Integer userId,Integer answerSequence);
 }

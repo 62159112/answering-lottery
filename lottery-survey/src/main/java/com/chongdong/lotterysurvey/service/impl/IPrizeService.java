@@ -6,7 +6,7 @@ import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.model.Prize;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.IUserService;
+import com.chongdong.lotterysurvey.service.UserService;
 import com.chongdong.lotterysurvey.service.PrizeService;
 import com.chongdong.lotterysurvey.mapper.PrizeMapper;
 import jakarta.annotation.Resource;
@@ -23,7 +23,7 @@ public class IPrizeService extends ServiceImpl<PrizeMapper, Prize>
 
     private ResponseMap responseMap = MapFactory.createMap();
     @Resource
-    private IUserService userService;
+    private UserService userService;
 
     @Override
     public void userEmpty(Integer userId) {

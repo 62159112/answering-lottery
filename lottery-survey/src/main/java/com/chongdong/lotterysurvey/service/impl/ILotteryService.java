@@ -7,7 +7,7 @@ import com.chongdong.lotterysurvey.model.Lottery;
 import com.chongdong.lotterysurvey.model.Prize;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.IUserService;
+import com.chongdong.lotterysurvey.service.UserService;
 import com.chongdong.lotterysurvey.service.LotteryService;
 import com.chongdong.lotterysurvey.mapper.LotteryMapper;
 import com.chongdong.lotterysurvey.service.PrizeService;
@@ -35,7 +35,7 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
     private final DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Resource
-    private IUserService userService;
+    private UserService userService;
 
     @Resource
     private PrizeService prizeService;

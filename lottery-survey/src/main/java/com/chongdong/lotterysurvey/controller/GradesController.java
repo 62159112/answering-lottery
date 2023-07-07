@@ -9,11 +9,12 @@ import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.AnswerResultService;
 import com.chongdong.lotterysurvey.service.GradesService;
-import com.chongdong.lotterysurvey.service.IUserService;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class GradesController {
     @Resource
     private GradesService gradesService;
     @Resource
-    IUserService userService;
+    UserService userService;
     @Resource
     AnswerResultService answerResultService;
     @GetMapping("/{id}")
@@ -114,16 +115,19 @@ public class GradesController {
     public ResponseMap flushed(){
         // 设置注册时间
         Grades grades = new Grades();
-        User user = userService.getOne(new QueryWrapper<User>().eq("id", grades.getUserid()));
+        User user = userService.getOne(new QueryWrapper<User>().eq("id", 2));
         QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userId", grades.getUserid()).eq("answerSequence",1);
+        queryWrapper.eq("userId", 2);
+        queryWrapper.eq("answerSequence",1);
+        queryWrapper.between("createTime", LocalDate.now(),LocalDate.now().plusDays(1));
         AnswerResult answerResult = answerResultService.getOne(queryWrapper);
         grades.setRegtime(user.getCreateDate());
         grades.setUsername(user.getUserName());
         grades.setRegion(user.getUserRegion());
-        grades.setSpendtime(answerResultService.searchSpendTimeById(1));
+        grades.setUserid(2);
+        grades.setSpendtime(answerResultService.searchSpendTimeById(2,1));
         grades.setScore(answerResult.getAnswerScore());
-        grades.setAnswerday(1);
+        grades.setAnswerday(answerResult.getCreateTime().getDayOfMonth());
         boolean save = gradesService.save(grades);
         return save?ResponseMap.ok():ResponseMap.error();
     }

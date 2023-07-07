@@ -9,7 +9,7 @@ import com.chongdong.lotterysurvey.model.AnswerResult;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.AnswerResultService;
-import com.chongdong.lotterysurvey.service.IUserService;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
     private ResponseMap responseMap = MapFactory.createMap();
 
     @Resource
-    private IUserService userService;
+    private UserService userService;
     @Resource
     private AnswerResultMapper answerResultMapper;
 
@@ -73,8 +73,8 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
     }
 
     @Override
-    public Integer searchSpendTimeById(Integer id) {
-        String time = baseMapper.searchSpendTimeById(id);
+    public Integer searchSpendTimeById(Integer userId,Integer answerSequence) {
+        String time = baseMapper.searchSpendTimeById(userId,answerSequence);
         String[] my =time.split(":");
         int hour =Integer.parseInt(my[0]);
         int min =Integer.parseInt(my[1]);
