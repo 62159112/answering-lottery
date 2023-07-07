@@ -7,7 +7,7 @@ import com.chongdong.lotterysurvey.model.ResponseMap;
 /**
 * @author cd
 * @description 针对表【tcd_prize(奖励表)】的数据库操作Service
-* @createDate 2023-07-07 11:06:16
+* @createDate 2023-07-07 16:43:39
 */
 public interface PrizeService extends IService<Prize> {
     void userEmpty(Integer userId);
