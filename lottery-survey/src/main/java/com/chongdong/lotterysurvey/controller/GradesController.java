@@ -110,7 +110,7 @@ public class GradesController {
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
-    // 刷新
+    // TODO: 2023/7/7  刷新
     @PostMapping
     public ResponseMap flushed(){
         // 设置注册时间
@@ -125,7 +125,7 @@ public class GradesController {
         grades.setUsername(user.getUserName());
         grades.setRegion(user.getUserRegion());
         grades.setUserid(2);
-        grades.setSpendtime(answerResultService.searchSpendTimeById(2,1));
+        grades.setSpendtime(111);
         grades.setScore(answerResult.getAnswerScore());
         grades.setAnswerday(answerResult.getCreateTime().getDayOfMonth());
         boolean save = gradesService.save(grades);

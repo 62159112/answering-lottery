@@ -10,13 +10,7 @@ import com.chongdong.lotterysurvey.model.AnswerResult;
 * @Entity com.chongdong.lotterysurvery.model.Answer
 */
 public interface AnswerResultMapper extends BaseMapper<AnswerResult> {
-    /**
-     * 根据选择的用户id和第几次答题
-     * @param userId 1 用户id
-     * @param answerSequence 1 第几次答题
-     * @return 花费的时间
-     */
-    String searchSpendTimeById(Integer userId,Integer answerSequence);
+
 }
 
 

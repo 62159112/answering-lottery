@@ -51,9 +51,9 @@ class LotterySurveyApplicationTests {
     }
     @Test
     void test3(){
-        AnswerResult answerResult = answerResultService.getById(1);
+       /* AnswerResult answerResult = answerResultService.getById(1);
         long time = answerResultService.searchSpendTimeById(1,1);
-        System.out.println(time);
+        System.out.println(time);*/
 
         QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userId", 2);
