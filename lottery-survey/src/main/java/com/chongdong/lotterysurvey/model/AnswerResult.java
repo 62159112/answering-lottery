@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * 答题表
- * @TableName tcd_answer
+ * @TableName tcd_answerResult
  */
 @TableName(value ="tcd_answerResult")
 @Data
@@ -35,22 +35,18 @@ public class AnswerResult implements Serializable {
     private Integer userId;
 
     /**
-     * 答题开始时间
+     * 创建时间
      */
     @TableField(value = "createTime")
     private LocalDateTime createTime;
 
     /**
-     * 答题结束时间
+     * 答题时间
      */
-    @TableField(value = "endTime")
-    private LocalDateTime endTime;
+    @TableField(value = "answerTime")
+    private Integer answerTime;
 
-    /**
-     * 第几次答题
-     */
-    @TableField(value = "answerSequence")
-    private Integer answerSequence;
+
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
