@@ -6,8 +6,8 @@ import com.chongdong.lotterysurvey.model.AnswerResult;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.Topic;
 import com.chongdong.lotterysurvey.service.AnswerResultService;
-import com.chongdong.lotterysurvey.service.IUserService;
 import com.chongdong.lotterysurvey.service.TopicService;
+import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class AnswerController {
     @Resource
     private TopicService topicService;
     @Resource
-    private IUserService userService;
+    private UserService userService;
 
     /**
      * 随机抽取10个问题
