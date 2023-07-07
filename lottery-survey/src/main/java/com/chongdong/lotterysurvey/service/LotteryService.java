@@ -11,4 +11,10 @@ import com.chongdong.lotterysurvey.model.ResponseMap;
 */
 public interface LotteryService extends IService<Lottery> {
     ResponseMap getResult(Integer userId);
+
+    ResponseMap getLottery();
+
+    Boolean addLottery();
+
+    Boolean addLotteryFirst();
 }
