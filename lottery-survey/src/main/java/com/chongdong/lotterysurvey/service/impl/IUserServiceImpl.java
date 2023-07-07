@@ -4,13 +4,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.IUserService;
+import com.chongdong.lotterysurvey.service.UserService;
 import com.chongdong.lotterysurvey.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,8 +19,8 @@ import java.util.regex.Pattern;
 * @createDate 2023-07-06 10:51:34
 */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-    implements IUserService {
+public class IUserServiceImpl extends ServiceImpl<UserMapper, User>
+    implements UserService {
     @Resource
     private UserMapper userMapper;
     ResponseMap responseMap= MapFactory.createMap();
