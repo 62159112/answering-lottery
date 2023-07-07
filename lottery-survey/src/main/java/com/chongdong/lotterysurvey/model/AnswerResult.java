@@ -46,6 +46,12 @@ public class AnswerResult implements Serializable {
     @TableField(value = "endTime")
     private LocalDateTime endTime;
 
+    /**
+     * 第几次答题
+     */
+    @TableField(value = "answerSequence")
+    private Integer answerSequence;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

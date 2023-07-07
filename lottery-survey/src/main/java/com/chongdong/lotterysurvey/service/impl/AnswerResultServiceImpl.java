@@ -1,6 +1,7 @@
 package com.chongdong.lotterysurvey.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.mapper.AnswerResultMapper;
@@ -11,6 +12,11 @@ import com.chongdong.lotterysurvey.service.AnswerResultService;
 import com.chongdong.lotterysurvey.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 /**
 * @author cd
@@ -33,6 +39,21 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
 
     @Override
     public ResponseMap add(AnswerResult answerResult) {
+        Date date = new Date();
+        SimpleDateFormat dateFormat=new SimpleDateFormat("YYYY-MM-dd");
+        String format = dateFormat.format(date);
+        QueryWrapper<AnswerResult> wrapper = new QueryWrapper<>();
+        wrapper.like("createTime",format);
+        int aLong = answerResultMapper.selectCount(wrapper).intValue();
+        System.out.println(aLong);
+
+        if (aLong<3){
+            //答题次数
+          answerResult.setAnswerSequence(aLong+1);
+        }
+        //结束时间
+        answerResult.setEndTime(LocalDateTime.now());
+        //添加答题结果
         int insert = answerResultMapper.insert(answerResult);
         if (insert>=1){
             //答题次数减一
