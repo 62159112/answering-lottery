@@ -1,5 +1,6 @@
 package com.chongdong.lotterysurvey.service;
 
+import cn.hutool.http.server.HttpServerRequest;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -33,4 +34,6 @@ public interface IUserService extends IService<User> {
      * 修改抽奖次数
      * */
     ResponseMap updateUserDrawNumber(Integer id,Integer userDrawNumber);
+
+    ResponseMap updateUserNumber(Integer id);
 }

@@ -1,6 +1,7 @@
 package com.chongdong.lotterysurvey.service.impl;
 
 
+import cn.hutool.http.server.HttpServerRequest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.lotterysurvey.factory.MapFactory;
@@ -11,12 +12,17 @@ import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.AnswerResultService;
 import com.chongdong.lotterysurvey.service.IUserService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.net.HttpCookie;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author cd
@@ -38,37 +44,85 @@ public class AnswerResultServiceImpl extends ServiceImpl<AnswerResultMapper, Ans
 
 
     @Override
-    public ResponseMap add(AnswerResult answerResult) {
+    public ResponseMap add(AnswerResult answerResult, HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Integer id = null;
+        for (Cookie cookie : cookies) {
+            String name = cookie.getName();
+
+            if(name.equals("userId")){
+                String value = cookie.getValue();
+                id = Integer.parseInt(value);
+            }
+        }
+        //修改答题次数和抽奖次数
+        User user = userService.getById(id);
+        //修改答题次数
+        user.setUserNumber(user.getUserNumber()-1);
+        if (answerResult.getAnswerScore()>=60){
+            //修改抽奖次数
+            user.setUserDrawNumber(user.getUserDrawNumber()+1);
+        }
+        userService.updateById(user);
+
+        //今天答题次数
         Date date = new Date();
         SimpleDateFormat dateFormat=new SimpleDateFormat("YYYY-MM-dd");
         String format = dateFormat.format(date);
         QueryWrapper<AnswerResult> wrapper = new QueryWrapper<>();
-        wrapper.like("createTime",format);
+        wrapper.eq("userId",id).like("createTime",format);
         int aLong = answerResultMapper.selectCount(wrapper).intValue();
-        System.out.println(aLong);
-
+        System.out.println(aLong+"dddddddddddddddddddd");
         if (aLong<3){
-            //答题次数
+            //今天答题次数+1
           answerResult.setAnswerSequence(aLong+1);
         }
         //结束时间
         answerResult.setEndTime(LocalDateTime.now());
+
+        answerResult.setCreateTime(LocalDateTime.now());
         //添加答题结果
         int insert = answerResultMapper.insert(answerResult);
         if (insert>=1){
-            //答题次数减一
-            User user = userService.getById(answerResult.getUserId());
-            user.setUserNumber(user.getUserNumber()-1);
-            userService.updateById(user);
-            if (answerResult.getAnswerScore()>=60){
-                //抽奖次数加一
-                user.setUserDrawNumber(user.getUserDrawNumber()+1);
-            }
-            userService.updateById(user);
+            responseMap.setData(insert);
+            responseMap.setFlag(true);
+            responseMap.setMessage("答题成绩添加成功！");
+        }else {
+            responseMap.setData(insert);
+            responseMap.setFlag(false);
+            responseMap.setMessage("答题成绩添加失败！");
         }
-        responseMap.setData(insert);
-        responseMap.setFlag(true);
-        responseMap.setMessage("答题成绩添加成功！");
+
+        return responseMap;
+    }
+
+    @Override
+    public ResponseMap selectScore(HttpServletRequest request) {
+
+        Cookie[] cookies = request.getCookies();
+        Integer id = null;
+        for (Cookie cookie : cookies) {
+            String name = cookie.getName();
+
+            if(name.equals("userId")){
+                String value = cookie.getValue();
+                id = Integer.parseInt(value);
+            }
+        }
+        QueryWrapper<AnswerResult> wrapper = new QueryWrapper<>();
+        wrapper.eq("userId",id).select("IFNULL(sum(answerScore),0) as totalScore");
+       // List<AnswerResult> answerResults = answerResultMapper.selectList(wrapper);
+        Map<String,Object> map = this.getMap(wrapper);
+        if (map!=null&&!map.isEmpty()){
+            responseMap.setData(map);
+            responseMap.setFlag(true);
+            responseMap.setMessage("答题成绩查询成功！");
+        }else {
+            responseMap.setData(null);
+            responseMap.setFlag(false);
+            responseMap.setMessage("答题成绩查询失败！");
+        }
+
         return responseMap;
     }
 }
