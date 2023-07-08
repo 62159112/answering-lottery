@@ -37,7 +37,7 @@ class LotterySurveyApplicationTests {
 
     @Test
     void contextLoads() {
-        String queryStreetFullName = streetService.queryStreetFullName(9);
+        String queryStreetFullName = streetService.queryStreetFullName(200);
         System.out.println(queryStreetFullName);
         System.out.println(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
     }
@@ -108,6 +108,7 @@ class LotterySurveyApplicationTests {
     }
     @Test
     void contextLoadsE(){
-
+        Integer integer = teamService.queryStreetIdByTeamName("桐梓县尧龙山镇");
+        System.out.println(integer);
     }
 }
