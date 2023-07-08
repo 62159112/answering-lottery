@@ -39,15 +39,4 @@ public class TeamController {
         List<Team> teamNumber = teamService.list(new QueryWrapper<Team>().eq("answerDay",answerDay).orderByDesc("teamNumber"));
         return teamNumber!=null?ResponseMap.ok().data(teamNumber):ResponseMap.error();
     }
-
-    /**
-     * 刷新团队答题人次
-     * @return 团队（地域/街道答题）信息刷新
-     */
-    // TODO: 2023/7/7  
-    @PostMapping
-    public ResponseMap add(Team team){
-        return teamService.add(team);
-    }
-
 }

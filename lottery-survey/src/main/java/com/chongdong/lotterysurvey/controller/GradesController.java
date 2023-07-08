@@ -24,9 +24,9 @@ import java.util.Map;
 public class GradesController {
     @Resource
     private GradesService gradesService;
-//    测试
     @Resource
-    TeamService teamService;
+    private TeamService teamService;
+//    测试
     @GetMapping("/{id}")
     public ResponseMap queryGradesById(@PathVariable Integer id){
         Grades byId = gradesService.getById(id);
@@ -60,16 +60,15 @@ public class GradesController {
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
-    // 刷新地区数据和个人答题数据
+    // 刷新个人答题数据
     @PostMapping
     public ResponseMap flushed(Integer userId,Integer answerDay){
-
         Map map = gradesService.flushed(userId,answerDay);
         Team team = new Team();
-        team.setAnswerday(answerDay);
-        team.setStreetid(teamService.queryStreetIdByTeamName(map.get("region").toString()));
-        ResponseMap add = teamService.add(team);
-        map.put("更新地区数据",add);
+                    team.setAnswerday(answerDay);
+                    team.setStreetid(teamService.queryStreetIdByTeamName(map.get("region").toString()));
+                    ResponseMap add = gradesService.add(team);
+                    map.put("更新地区数据",add);
         return ResponseMap.ok().data(map);
     }
 }

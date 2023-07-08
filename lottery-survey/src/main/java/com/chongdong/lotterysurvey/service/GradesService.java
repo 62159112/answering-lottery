@@ -3,6 +3,8 @@ package com.chongdong.lotterysurvey.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.lotterysurvey.model.Grades;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chongdong.lotterysurvey.model.ResponseMap;
+import com.chongdong.lotterysurvey.model.Team;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
@@ -26,4 +28,6 @@ public interface GradesService extends IService<Grades> {
     Page<Grades> queryAllByUsername(HttpServletRequest request);
 
     Map flushed(Integer userId, Integer answerDay);
+
+    ResponseMap add(Team team);
 }
