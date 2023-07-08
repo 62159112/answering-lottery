@@ -20,6 +20,7 @@ import java.util.List;
 public class TeamController {
     @Resource
     TeamService teamService;
+//    测试
     @GetMapping("/{id}")
     public ResponseMap queryTeamById(@PathVariable Integer id){
         Team byId = teamService.getById(id);

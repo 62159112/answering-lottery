@@ -12,6 +12,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface TeamMapper extends BaseMapper<Team> {
 
     Integer searchAllByAnswerdayAndStreetid(Integer answerDay,Integer streetId);
+
+    Integer searchStreetidByTeamname(String teamName);
 }
 
 

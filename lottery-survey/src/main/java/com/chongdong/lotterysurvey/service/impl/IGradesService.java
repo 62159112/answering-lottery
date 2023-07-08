@@ -11,9 +11,12 @@ import com.chongdong.lotterysurvey.service.GradesService;
 import com.chongdong.lotterysurvey.mapper.GradesMapper;
 import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +76,10 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     }
 
     @Override
-    public Page<Grades> queryAllMaxScoreByUsername(String username) {
+    public Page<Grades> queryAllMaxScoreByUsername(HttpServletRequest request) {
+        // 更新今日最新个人成绩数据
+        flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("userid", "username", "MAX(score) as score", "MIN(spendtime) as spendtime","region","answerDay")
@@ -81,7 +87,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 .orderByAsc("answerDay")
                 .orderByDesc("score")
                 .orderByAsc("spendtime")
-                .eq("username",username);
+                .eq("userid",getUserId(request));
 
         // 查询前十条成绩
         Page<Grades> page = new Page<>(1, 10);
@@ -89,18 +95,20 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     }
 
     @Override
-    public Page<Grades> queryAllByUsername(String username) {
+    public Page<Grades> queryAllByUsername(HttpServletRequest request) {
+        // 更新今日最新个人成绩数据
+        flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .orderByAsc("answerDay")
                 .orderByDesc("score")
-                .eq("username",username);
+                .eq("userid",getUserId(request));
         // 查询前十条成绩
         Page<Grades> page = new Page<>(1, 30);
         return this.page(page, queryWrapper);
     }
-
+    // 刷新信息
     @Override
     public Map flushed(Integer userId, Integer answerDay) {
         // 设置注册时间
@@ -141,6 +149,18 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
         grades.setScore(answerResult.getAnswerScore());
         grades.setAnswerday(answerResult.getCreateTime().getDayOfMonth());
         return grades;
+    }
+    private Integer getUserId(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        Integer userId = null;
+        for (Cookie cookie : cookies) {
+            String name = cookie.getName();
+            if(name.equals("userId")){
+                String value = cookie.getValue();
+                userId = Integer.parseInt(value);
+            }
+        }
+        return userId;
     }
 }
 

@@ -58,6 +58,11 @@ public class ITeamService extends ServiceImpl<TeamMapper, Team>
             return update?ResponseMap.ok().message("更新成功").data(gradesService.queryTeamNumber(team.getAnswerday(), streetFullName)) :ResponseMap.error().message("更新失败");
         }
     }
+
+    @Override
+    public Integer queryStreetIdByTeamName(String teamName) {
+        return baseMapper.searchStreetidByTeamname(teamName);
+    }
 }
 
 

@@ -21,4 +21,9 @@
         from tcd_team
         where answerDay = #{answerDay} and streetId = #{streetId}
     </select>
+    <select id="searchStreetidByTeamname" resultType="java.lang.Integer">
+        select distinct streetId
+        from tcd_team
+        where teamName = #{teamName}
+    </select>
 </mapper>
