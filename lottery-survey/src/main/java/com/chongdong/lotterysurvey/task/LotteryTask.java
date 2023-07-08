@@ -11,25 +11,44 @@ import org.springframework.stereotype.Component;
 public class LotteryTask {
     @Resource
     private LotteryService lotteryService;
-
-    @Scheduled(cron = "10 57 9 * * ?")
-    public void firstLottery(){
-
+    /**
+     * 将昨日剩余奖池添加至今日
+     * */
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void getYesterdayLottery(){
         lotteryService.addLotteryFirst();
-        System.out.println("time1 run");
     }
+    /**
+     * 9.20定时添加奖池任务
+     * */
+    @Scheduled(cron = "0 20 9 * * ?")
+    public void firstLottery(){
+        lotteryService.addLottery();
+    }
+    /**
+     * 11.45定时添加奖池任务
+     * */
     @Scheduled(cron = "0 45 11 * * ?")
     public void secondLottery(){
         lotteryService.addLottery();
     }
+    /**
+     * 14.25定时添加奖池任务
+     * */
     @Scheduled(cron = "0 25 14 * * ?")
     public void thirdLottery(){
         lotteryService.addLottery();
     }
+    /**
+     * 16.45定时添加奖池任务
+     * */
     @Scheduled(cron = "0 45 16 * * ?")
     public void fourthLottery(){
         lotteryService.addLottery();
     }
+    /**
+     * 18.35定时添加奖池任务
+     * */
     @Scheduled(cron = "0 35 18 * * ?")
     public void fifthLottery(){
         lotteryService.addLottery();

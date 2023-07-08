@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class CityController {
     @Resource
     private CityService cityService;
-
+    /**
+     * 获取城市列表
+     * */
     @GetMapping
     public ResponseMap listCity(){
         return cityService.listCity();
     }
 
-    @GetMapping("/123")
-    public String test(){
-        return "test";
-    }
 }

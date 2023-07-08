@@ -19,6 +19,9 @@ import java.util.List;
 public class ICityService extends ServiceImpl<CityMapper, City>
     implements CityService{
 
+    /**
+     * 获取城市列表
+     * */
     private ResponseMap responseMap = MapFactory.createMap();
     @Override
     public ResponseMap listCity() {
