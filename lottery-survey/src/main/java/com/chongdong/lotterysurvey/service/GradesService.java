@@ -10,4 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface GradesService extends IService<Grades> {
     Integer queryTeamNumber(Integer answerDay,String region);
+
+    Integer queryGradesExit(Integer userId,Integer score,Integer spendTime,Integer answerDay);
 }

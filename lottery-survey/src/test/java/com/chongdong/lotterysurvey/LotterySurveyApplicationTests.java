@@ -1,6 +1,7 @@
 package com.chongdong.lotterysurvey;
 
 import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.lotterysurvey.model.AnswerResult;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 @SpringBootTest
@@ -46,26 +48,20 @@ class LotterySurveyApplicationTests {
     }
     @Test
     void test2(){
-        Integer teamNumber = teamService.queryTeamExit(6, "红花岗区老城街道");
+        Integer teamNumber = teamService.queryTeamExit(6, 1);
         System.out.println(teamNumber);
     }
     @Test
     void test3(){
-       /* AnswerResult answerResult = answerResultService.getById(1);
-        long time = answerResultService.searchSpendTimeById(1,1);
-        System.out.println(time);*/
 
         QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userId", 2);
-        queryWrapper.eq("answerSequence",1);
         queryWrapper.between("createTime",LocalDate.now(),LocalDate.now().plusDays(1));
-        AnswerResult answerResul = answerResultService.getOne(queryWrapper);
+        List<AnswerResult> list = answerResultService.list(queryWrapper);
 
-        LocalDateTime createTime = answerResul.getCreateTime();
-
-        System.out.println(answerResul.toString());
-        System.out.println(answerResul.getCreateTime());
-
+        for (AnswerResult answerResult:list) {
+            System.out.println(answerResult.getCreateTime());
+        }
     }
     @Test
     void contextLoadsA() {
@@ -104,5 +100,14 @@ class LotterySurveyApplicationTests {
         LocalDate tomorrow = today.plusDays(1);
         System.out.println(today);
         System.out.println(tomorrow);
+    }
+    @Test
+    void contextLoadsD(){
+        Integer integer = gradesService.queryGradesExit(2, 20, 60, 8);
+        System.out.println(integer);
+    }
+    @Test
+    void contextLoadsE(){
+
     }
 }

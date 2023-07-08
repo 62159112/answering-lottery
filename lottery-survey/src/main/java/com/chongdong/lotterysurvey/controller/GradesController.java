@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description: 个人成绩（答题成绩）
@@ -112,24 +115,50 @@ public class GradesController {
     }
     // TODO: 2023/7/7  刷新
     @PostMapping
-    public ResponseMap flushed(){
+    public ResponseMap flushed(Integer userId,Integer answerDay){
         // 设置注册时间
-        Grades grades = new Grades();
-        User user = userService.getOne(new QueryWrapper<User>().eq("id", 2));
+        User user = userService.getOne(new QueryWrapper<User>().eq("id", userId));
         QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userId", 2);
-        queryWrapper.eq("answerSequence",1);
-        queryWrapper.between("createTime", LocalDate.now(),LocalDate.now().plusDays(1));
-        AnswerResult answerResult = answerResultService.getOne(queryWrapper);
-        grades.setRegtime(user.getCreateDate());
-        grades.setUsername(user.getUserName());
-        grades.setRegion(user.getUserRegion());
-        grades.setUserid(2);
-        grades.setSpendtime(111);
-        grades.setScore(answerResult.getAnswerScore());
-        grades.setAnswerday(answerResult.getCreateTime().getDayOfMonth());
-        boolean save = gradesService.save(grades);
-        return save?ResponseMap.ok():ResponseMap.error();
+        queryWrapper.eq("userId", userId);
+        queryWrapper.between("createTime", LocalDate.of(2023, 7, answerDay),LocalDate.of(2023, 7, answerDay+1));
+        List<AnswerResult> answerResultList = answerResultService.list(queryWrapper);
+        Map map = new HashMap();
+        int i =0;
+        for (AnswerResult answerResult:answerResultList) {
+            if (gradesService.queryGradesExit(answerResult.getUserId(),answerResult.getAnswerScore(),answerResult.getAnswerTime(),answerResult.getCreateTime().getDayOfMonth())<1){
+                Grades grades = new Grades();
+                grades.setRegtime(user.getCreateDate());
+                grades.setUsername(user.getUserName());
+                grades.setRegion(user.getUserRegion());
+                grades.setUserid(user.getId());
+                grades.setSpendtime(answerResult.getAnswerTime());
+                grades.setScore(answerResult.getAnswerScore());
+                grades.setAnswerday(answerResult.getCreateTime().getDayOfMonth());
+                boolean save = gradesService.save(grades);
+                String saveKey = "save"+ i++;
+                map.put(saveKey,save);
+            }else {
+                Grades grades = new Grades();
+                grades.setRegtime(user.getCreateDate());
+                grades.setUsername(user.getUserName());
+                grades.setRegion(user.getUserRegion());
+                grades.setUserid(user.getId());
+                grades.setSpendtime(answerResult.getAnswerTime());
+                grades.setScore(answerResult.getAnswerScore());
+                grades.setAnswerday(answerResult.getCreateTime().getDayOfMonth());
+
+                QueryWrapper<Grades> updateWrapper = new QueryWrapper<>();
+                updateWrapper.eq("userId",grades.getUserid());
+                updateWrapper.eq("score",grades.getScore());
+                updateWrapper.eq("spendTime",grades.getSpendtime());
+                updateWrapper.eq("answerDay",answerResult.getCreateTime().getDayOfMonth());
+                boolean update = gradesService.update(grades, updateWrapper);
+                String updateKey = "update"+ i++;
+                map.put(updateKey,update);
+            }
+        }
+        return ResponseMap.ok().data(map);
+
     }
 
 }

@@ -18,6 +18,11 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     public Integer queryTeamNumber(Integer answerDay, String region) {
         return baseMapper.searchAllByAnswerDay(answerDay,region);
     }
+
+    @Override
+    public Integer queryGradesExit(Integer userId, Integer score, Integer spendTime, Integer answerDay) {
+        return baseMapper.searchGradesExit(userId,score,spendTime,answerDay);
+    }
 }
 
 
