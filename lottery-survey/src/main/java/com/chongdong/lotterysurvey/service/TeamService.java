@@ -1,5 +1,6 @@
 package com.chongdong.lotterysurvey.service;
 
+import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.Team;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface TeamService extends IService<Team> {
     Integer queryTeamExit(Integer answerDay,Integer streetId);
+
+    ResponseMap add(Team team);
 }
