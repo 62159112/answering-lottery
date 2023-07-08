@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class StreetController {
     @Resource
     private StreetService streetService;
-
+    /**
+     * 获取区域全部街道信息
+     * */
     @GetMapping("/{cityId}")
     public ResponseMap listStreetByCity(@PathVariable Integer cityId){
         return streetService.listStreetByCity(cityId);

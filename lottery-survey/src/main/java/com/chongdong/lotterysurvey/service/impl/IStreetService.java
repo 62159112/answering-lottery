@@ -21,6 +21,9 @@ import java.util.List;
 public class IStreetService extends ServiceImpl<StreetMapper, Street>
     implements StreetService{
     private ResponseMap responseMap = MapFactory.createMap();
+    /**
+     * 根据区id获取该区全部街道
+     * */
     @Override
     public ResponseMap listStreetByCity(Integer cityId) {
         QueryWrapper<Street> queryWrapper = new QueryWrapper<>();

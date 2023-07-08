@@ -40,7 +40,10 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
 
     @Resource
     private PrizeService prizeService;
-
+    /**
+     * 传入userid获取该用户是否还有抽奖次数
+     * 若有次数获取抽奖结果
+     * */
     @Override
     public ResponseMap getResult(Integer userId) {
         User user = userService.getById(userId);
@@ -109,7 +112,9 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
         }
         return responseMap;
     }
-
+    /**
+     * 获取当前奖池
+     * */
     @Override
     public ResponseMap getLottery() {
         QueryWrapper<Lottery> queryWrapper = new QueryWrapper<>();
@@ -125,7 +130,9 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
         }
         return responseMap;
     }
-
+    /**
+     * 添加奖池(定时任务使用
+     * */
     @Override
     public Boolean addLottery() {
         QueryWrapper<Lottery> queryWrapper = new QueryWrapper<>();
@@ -135,7 +142,9 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
         lottery.setPrizethree(lottery.getPrizethree()+10);
         return this.saveOrUpdate(lottery);
     }
-
+    /**
+     * 将昨日剩余奖池添加进今日奖池(定时任务使用
+     * */
     @Override
     public Boolean addLotteryFirst() {
         Calendar calendar = Calendar.getInstance();
@@ -166,7 +175,9 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
             return true;
         }
     }
-
+    /**
+     * 查询最后一日剩余奖池
+     * */
     @Override
     public ResponseMap residueLottery() throws ParseException {
         Date lastDay = simpleDateFormat.parse("2023-7-16");
