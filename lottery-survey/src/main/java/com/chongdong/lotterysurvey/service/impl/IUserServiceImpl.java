@@ -1,5 +1,6 @@
 package com.chongdong.lotterysurvey.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.lotterysurvey.factory.MapFactory;
 import com.chongdong.lotterysurvey.model.ResponseMap;
@@ -163,7 +164,15 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         return responseMap;
     }
-
+    /**
+     * 每日重置用户答题次数为2(定时任务使用
+     * */
+    @Override
+    public void setUserNumber() {
+        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+        wrapper.set("userNumber",2);
+        this.update(wrapper);
+    }
 }
 
 

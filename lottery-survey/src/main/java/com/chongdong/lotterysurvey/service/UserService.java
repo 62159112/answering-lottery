@@ -36,4 +36,6 @@ public interface UserService extends IService<User> {
     ResponseMap updateUserDrawNumber(Integer id,Integer userDrawNumber);
 
     ResponseMap updateUserNumber(Integer id);
+
+    void setUserNumber();
 }
