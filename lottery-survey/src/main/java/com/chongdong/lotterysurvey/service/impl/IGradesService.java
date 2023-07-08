@@ -98,6 +98,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     public Page<Grades> queryAllByUsername(HttpServletRequest request) {
         // 更新今日最新个人成绩数据
         flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
         queryWrapper
@@ -124,6 +125,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 boolean save = this.save(createGrades(user, answerResult));
                 String saveKey = "save"+ i++;
                 map.put(saveKey,save);
+                map.put("region",user.getUserRegion());
             }else {
                 Grades grades = createGrades(user, answerResult);
                 QueryWrapper<Grades> updateWrapper = new QueryWrapper<>();
@@ -134,6 +136,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 boolean update = this.update(grades, updateWrapper);
                 String updateKey = "update"+ i++;
                 map.put(updateKey,update);
+                map.put("region",user.getUserRegion());
             }
         }
         return map;

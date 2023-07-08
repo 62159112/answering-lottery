@@ -3,7 +3,9 @@ package com.chongdong.lotterysurvey.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.lotterysurvey.model.Grades;
 import com.chongdong.lotterysurvey.model.ResponseMap;
+import com.chongdong.lotterysurvey.model.Team;
 import com.chongdong.lotterysurvey.service.GradesService;
+import com.chongdong.lotterysurvey.service.TeamService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ public class GradesController {
     @Resource
     private GradesService gradesService;
 //    测试
+    @Resource
+    TeamService teamService;
     @GetMapping("/{id}")
     public ResponseMap queryGradesById(@PathVariable Integer id){
         Grades byId = gradesService.getById(id);
@@ -56,10 +60,16 @@ public class GradesController {
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
-
+    // 刷新地区数据和个人答题数据
     @PostMapping
     public ResponseMap flushed(Integer userId,Integer answerDay){
+
         Map map = gradesService.flushed(userId,answerDay);
+        Team team = new Team();
+        team.setAnswerday(answerDay);
+        team.setStreetid(teamService.queryStreetIdByTeamName(map.get("region").toString()));
+        ResponseMap add = teamService.add(team);
+        map.put("更新地区数据",add);
         return ResponseMap.ok().data(map);
     }
 }
