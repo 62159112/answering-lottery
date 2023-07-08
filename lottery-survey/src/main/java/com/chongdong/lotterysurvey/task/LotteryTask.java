@@ -12,11 +12,14 @@ public class LotteryTask {
     @Resource
     private LotteryService lotteryService;
 
-    @Scheduled(cron = "10 57 9 * * ?")
-    public void firstLottery(){
-
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void getYesterdayLottery(){
         lotteryService.addLotteryFirst();
-        System.out.println("time1 run");
+    }
+
+    @Scheduled(cron = "0 20 9 * * ?")
+    public void firstLottery(){
+        lotteryService.addLottery();
     }
     @Scheduled(cron = "0 45 11 * * ?")
     public void secondLottery(){

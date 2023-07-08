@@ -73,7 +73,7 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setMessage("抽奖成功!");
                         prize.setPrize(prize.getPrize().add(new BigDecimal(1)));
                         prizeService.updateById(prize);
-                        lottery.setPrizethree(lottery.getPrizetwo()-1);
+                        lottery.setPrizetwo(lottery.getPrizetwo()-1);
                         saveOrUpdate(lottery);
                     }else {
                         responseMap.setFlag(true);
@@ -87,7 +87,7 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                         responseMap.setMessage("抽奖成功!");
                         prize.setPrize(prize.getPrize().add(new BigDecimal("0.3")));
                         prizeService.updateById(prize);
-                        lottery.setPrizethree(lottery.getPrizeone()-1);
+                        lottery.setPrizeone(lottery.getPrizeone()-1);
                         saveOrUpdate(lottery);
                     }else {
                         responseMap.setFlag(true);
@@ -158,16 +158,12 @@ public class ILotteryService extends ServiceImpl<LotteryMapper, Lottery>
                 yesterdayLottery.setPrizethree(0);
             }
             if (saveOrUpdate(yesterdayLottery)){
-                if (this.saveOrUpdate(lottery)){
-                    return addLottery();
-                }else {
-                    return false;
-                }
+                return saveOrUpdate(lottery);
             }else {
                 return false;
             }
         }else {
-            return addLottery();
+            return true;
         }
     }
 

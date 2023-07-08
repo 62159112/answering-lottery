@@ -16,7 +16,7 @@ public class PrizeController {
         return prizeService.getPrize(userId);
     }
 
-    @GetMapping(value = {"","/{page}/{size}"})
+    @GetMapping(value = {"/list","/list/{page}/{size}"})
     public ResponseMap listPrize(@PathVariable(value = "page",required = false)Integer page,
                                  @PathVariable(value = "size",required = false)Integer size){
         return prizeService.listPrize(page,size);
