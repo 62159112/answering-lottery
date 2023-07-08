@@ -25,4 +25,12 @@
         from tcd_grades
         where answerDay = #{answerDay} and region = #{region}
     </select>
+    <select id="searchGradesExit" resultType="java.lang.Integer">
+        select count(*)
+        from tcd_grades
+        where answerDay = #{answerDay}
+          and userId = #{userId}
+          and score = #{score}
+          and spendTime = #{spendTime}
+    </select>
 </mapper>

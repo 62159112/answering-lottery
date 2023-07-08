@@ -1,7 +1,10 @@
 package com.chongdong.lotterysurvey.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.lotterysurvey.model.Grades;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.Map;
 
 /**
 * @author wo
@@ -10,4 +13,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface GradesService extends IService<Grades> {
     Integer queryTeamNumber(Integer answerDay,String region);
+
+    Integer queryGradesExit(Integer userId,Integer score,Integer spendTime,Integer answerDay);
+
+    Page<Grades> queryAllGradesOrderByAscAnswerDay();
+
+    Page<Grades> queryAllByAnswerDayOrderByScore(Integer answerDay);
+
+    Page<Grades> queryAllMaxScoreByUsername(String username);
+
+    Page<Grades> queryAllByUsername(String username);
+
+    Map flushed(Integer userId, Integer answerDay);
 }

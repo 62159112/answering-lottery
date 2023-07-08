@@ -19,6 +19,6 @@
     <select id="searchAllByAnswerdayAndStreetid" resultType="java.lang.Integer">
         select count(*)
         from tcd_team
-        where answerDay = #{answerDay} and teamName = #{teamName}
+        where answerDay = #{answerDay} and streetId = #{streetId}
     </select>
 </mapper>
