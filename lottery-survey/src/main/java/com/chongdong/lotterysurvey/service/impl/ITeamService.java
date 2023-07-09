@@ -12,6 +12,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
 * @author wo
@@ -29,6 +30,11 @@ public class ITeamService extends ServiceImpl<TeamMapper, Team>
     @Override
     public Integer queryStreetIdByTeamName(String teamName) {
         return baseMapper.searchStreetidByTeamname(teamName);
+    }
+
+    @Override
+    public List<Team> queryAllOrderByTeamNumber() {
+        return baseMapper.searchAllOrderByTeamNumber();
     }
 }
 
