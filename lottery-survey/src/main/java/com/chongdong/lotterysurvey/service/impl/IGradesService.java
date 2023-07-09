@@ -3,13 +3,9 @@ package com.chongdong.lotterysurvey.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.chongdong.lotterysurvey.model.AnswerResult;
-import com.chongdong.lotterysurvey.model.Grades;
-import com.chongdong.lotterysurvey.model.User;
-import com.chongdong.lotterysurvey.service.AnswerResultService;
-import com.chongdong.lotterysurvey.service.GradesService;
+import com.chongdong.lotterysurvey.model.*;
+import com.chongdong.lotterysurvey.service.*;
 import com.chongdong.lotterysurvey.mapper.GradesMapper;
-import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,9 +26,14 @@ import java.util.Map;
 public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     implements GradesService{
     @Resource
-    UserService userService;
+    private UserService userService;
     @Resource
-    AnswerResultService answerResultService;
+    private AnswerResultService answerResultService;
+    @Resource
+    private StreetService streetService;
+    @Resource
+    private TeamService teamService;
+
     @Override
     public Integer queryTeamNumber(Integer answerDay, String region) {
         return baseMapper.searchAllByAnswerDay(answerDay,region);
@@ -123,6 +124,13 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
         for (AnswerResult answerResult:answerResultList) {
             if (this.queryGradesExit(answerResult.getUserId(),answerResult.getAnswerScore(),answerResult.getAnswerTime(),answerResult.getCreateTime().getDayOfMonth())<1){
                 boolean save = this.save(createGrades(user, answerResult));
+                if (save){
+                    Team team = new Team();
+                    team.setAnswerday(answerDay);
+                    team.setStreetid(teamService.queryStreetIdByTeamName(user.getUserRegion()));
+                    ResponseMap add = this.add(team);
+                    map.put("更新地区数据",add);
+                }
                 String saveKey = "save"+ i++;
                 map.put(saveKey,save);
                 map.put("region",user.getUserRegion());
@@ -134,6 +142,13 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 updateWrapper.eq("spendTime",grades.getSpendtime());
                 updateWrapper.eq("answerDay",answerResult.getCreateTime().getDayOfMonth());
                 boolean update = this.update(grades, updateWrapper);
+                if (update){
+                    Team team = new Team();
+                    team.setAnswerday(answerDay);
+                    team.setStreetid(teamService.queryStreetIdByTeamName(user.getUserRegion()));
+                    ResponseMap add = this.add(team);
+                    map.put("更新地区数据",add);
+                }
                 String updateKey = "update"+ i++;
                 map.put(updateKey,update);
                 map.put("region",user.getUserRegion());
@@ -165,8 +180,34 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
         }
         return userId;
     }
+
+    @Override
+    public ResponseMap add(Team team) {
+        if (teamService.queryTeamExit(team.getAnswerday(),team.getStreetid())<1){
+            // 添加团队
+            String streetFullName = streetService.queryStreetFullName(team.getStreetid());
+            // 设置答题日期（几号）
+            team.setTeamname(streetFullName);
+            // team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            // 设置答题人次
+            team.setTeamnumber(this.queryTeamNumber(team.getAnswerday(), streetFullName));
+            boolean save = teamService.save(team);
+            return save?ResponseMap.ok().message("添加成功").data(this.queryTeamNumber(team.getAnswerday(), streetFullName)) :ResponseMap.error().message("添加失败");
+        }else {
+            // 更新团队
+            String streetFullName = streetService.queryStreetFullName(team.getStreetid());
+            // 设置答题日期（几号）
+            team.setTeamname(streetFullName);
+            // team.setAnswerday(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+            // 设置答题人次
+            System.out.println(this.queryTeamNumber(team.getAnswerday(), streetFullName));
+            team.setTeamnumber(this.queryTeamNumber(team.getAnswerday(), streetFullName));
+            QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("answerDay",team.getAnswerday());
+            queryWrapper.eq("teamName",streetFullName);
+            queryWrapper.eq("streetId",team.getStreetid());
+            boolean update = teamService.update(team, queryWrapper);
+            return update?ResponseMap.ok().message("更新成功").data(this.queryTeamNumber(team.getAnswerday(), streetFullName)) :ResponseMap.error().message("更新失败");
+        }
+    }
 }
-
-
-
-
