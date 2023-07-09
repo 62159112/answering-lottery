@@ -50,6 +50,10 @@ public class Topic implements Serializable {
      * 答案
      */
     private String answer;
+    /**
+     * 创建时间
+     */
+    private String createTime;
 
 
 

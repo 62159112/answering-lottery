@@ -12,10 +12,11 @@
             <result property="optionsC" column="options_c" jdbcType="VARCHAR"/>
             <result property="optionsD" column="options_d" jdbcType="VARCHAR"/>
             <result property="answer" column="answer" jdbcType="VARCHAR"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,topic_content,options_a,
-        options_b,options_c,options_d
+        options_b,options_c,options_d,createTime
     </sql>
 </mapper>

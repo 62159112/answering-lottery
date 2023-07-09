@@ -1,4 +1,3 @@
-/*
 package com.chongdong.lotterysurvey.interceptor;
 
 import com.chongdong.lotterysurvey.mapper.UserMapper;
@@ -40,4 +39,3 @@ public class UserInterceptor implements HandlerInterceptor {
 
     }
 }
-*/

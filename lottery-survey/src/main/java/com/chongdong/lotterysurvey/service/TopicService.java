@@ -18,5 +18,17 @@ public interface TopicService extends IService<Topic> {
     ResponseMap queryTopic(HttpServletRequest request, List<Topic> topics);
 
 
+    ResponseMap selectTopic(Integer userId, List<Topic> topics);
+    
+    
 
+    ResponseMap saveTopic(Topic topic);
+    
+    ResponseMap updateTopicById(Topic topic);
+
+    ResponseMap deleteTopic(Integer id);
+
+    ResponseMap selectPage(Integer current, String topicContent);
+
+    ResponseMap selectById(Integer id);
 }

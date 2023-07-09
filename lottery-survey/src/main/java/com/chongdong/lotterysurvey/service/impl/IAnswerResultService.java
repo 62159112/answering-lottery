@@ -42,7 +42,7 @@ public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, Answer
 
 
 
-
+//添加答题成绩
     @Override
     public ResponseMap add(AnswerResult answerResult, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
@@ -84,6 +84,41 @@ public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, Answer
         return responseMap;
     }
 
+    //添加答题成绩传id
+    @Override
+    public ResponseMap add(AnswerResult answerResult) {
+
+        //修改答题次数和抽奖次数
+        User user = userService.getById(answerResult.getUserId());
+        //修改答题次数
+        user.setUserNumber(user.getUserNumber()-1);
+        if (answerResult.getAnswerScore()>=60){
+            //修改抽奖次数
+            user.setUserDrawNumber(user.getUserDrawNumber()+1);
+        }
+        userService.updateById(user);
+
+        //结束时间
+        answerResult.setCreateTime(LocalDateTime.now());
+
+        answerResult.setCreateTime(LocalDateTime.now());
+        //添加答题结果
+        int insert = answerResultMapper.insert(answerResult);
+        if (insert>=1){
+            responseMap.setData(insert);
+            responseMap.setFlag(true);
+            responseMap.setMessage("答题成绩添加成功！");
+        }else {
+            responseMap.setData(insert);
+            responseMap.setFlag(false);
+            responseMap.setMessage("答题成绩添加失败！");
+        }
+
+        return responseMap;
+    }
+
+
+//查总成绩
     @Override
     public ResponseMap selectScore(HttpServletRequest request) {
 
@@ -97,6 +132,29 @@ public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, Answer
                 id = Integer.parseInt(value);
             }
         }
+        QueryWrapper<AnswerResult> wrapper = new QueryWrapper<>();
+        wrapper.eq("userId",id).select("IFNULL(sum(answerScore),0) as totalScore");
+       // List<AnswerResult> answerResults = answerResultMapper.selectList(wrapper);
+        Map<String,Object> map = this.getMap(wrapper);
+        if (map!=null&&!map.isEmpty()){
+            responseMap.setData(map);
+            responseMap.setFlag(true);
+            responseMap.setMessage("答题成绩查询成功！");
+        }else {
+            responseMap.setData(null);
+            responseMap.setFlag(false);
+            responseMap.setMessage("答题成绩查询失败！");
+        }
+
+        return responseMap;
+    }
+
+
+    //根据查总成绩
+    @Override
+    public ResponseMap selectScore(Integer id) {
+
+
         QueryWrapper<AnswerResult> wrapper = new QueryWrapper<>();
         wrapper.eq("userId",id).select("IFNULL(sum(answerScore),0) as totalScore");
        // List<AnswerResult> answerResults = answerResultMapper.selectList(wrapper);
