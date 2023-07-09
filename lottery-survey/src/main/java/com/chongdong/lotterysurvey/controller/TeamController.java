@@ -29,7 +29,8 @@ public class TeamController {
     // 地域/街道总排行榜（答题人次）
     @GetMapping("/list")
     public ResponseMap queryAllOrderByTeamNumber(){
-        List<Team> teamNumber = teamService.list(new QueryWrapper<Team>().orderByDesc("teamNumber"));
+
+        List<Team> teamNumber = teamService.queryAllOrderByTeamNumber();
         return teamNumber!=null?ResponseMap.ok().data(teamNumber):ResponseMap.error();
     }
 
