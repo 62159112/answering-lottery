@@ -14,9 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface AnswerResultService extends IService<AnswerResult> {
 
 
-
+//添加答题成绩
     ResponseMap add(AnswerResult answerResult,HttpServletRequest request);
+    //添加答题成绩根据
+    ResponseMap add(AnswerResult answerResult);
 
     ResponseMap selectScore(HttpServletRequest request);
+
+    ResponseMap selectScore(Integer id);
 
 }

@@ -40,15 +40,49 @@ public class AnswerController {
     }
 
     /**
+     * 传id
+     * 随机抽取10个问题
+     * @return
+     */
+    /*@GetMapping("/queryTopic/{userId}")
+    public ResponseMap queryTopic(
+            @PathVariable Integer userId
+    ){
+
+        List<Topic> topics = topicService.list();
+
+        return topicService.selectTopic(userId,topics);
+
+    }*/
+
+
+
+    /**
      * 添加成绩
      * @param answerResult
      * @return
      */
    @PostMapping("/save")
     public ResponseMap save(AnswerResult answerResult, HttpServletRequest request){
-         request.getCookies();
+
        return answerResultService.add(answerResult,request);
    }
+
+
+    /**
+     * 传id
+     * 添加成绩
+     * @param answerResult
+     * @return
+     */
+   /*@PostMapping("/save")
+    public ResponseMap save(AnswerResult answerResult){
+
+       return answerResultService.add(answerResult);
+   }*/
+
+
+
 
     /**
      * 答题总分
@@ -60,6 +94,24 @@ public class AnswerController {
 
        return answerResultService.selectScore(request);
    }
+
+
+    /**
+     * 答题总分
+     * @param
+     * @return
+     */
+  /* @GetMapping("/selectTotalScore/{userId}")
+    public ResponseMap selectScore(
+            @PathVariable Integer userId
+   ){
+
+       return answerResultService.selectScore(userId);
+   }*/
+
+
+
+
 
     /**
      * 分享朋友圈添加答题次数
