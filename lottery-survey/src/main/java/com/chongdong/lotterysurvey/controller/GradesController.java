@@ -10,6 +10,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,8 @@ public class GradesController {
     }
     // 查具体某日个人成绩排行
     @GetMapping("/listAnswerDay")
-    public ResponseMap queryAllByAnswerDayOrderByScore(Integer answerDay) {
+    public ResponseMap queryAllByAnswerDayOrderByScore() {
+        Integer answerDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         List<Grades> gradesPage = gradesService.queryAllByAnswerDayOrderByScore(answerDay);
         // 返回查询结果
         return ResponseMap.ok().data(gradesPage);

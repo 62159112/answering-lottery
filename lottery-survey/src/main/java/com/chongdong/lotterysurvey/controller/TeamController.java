@@ -6,6 +6,7 @@ import com.chongdong.lotterysurvey.service.TeamService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,7 +37,8 @@ public class TeamController {
 
     // 地域/街道每日排行榜（答题人次）-->传具体是哪号 例：2023年09月06日==>传 6 就行啦
     @GetMapping("/listAnswerDay")
-    public ResponseMap queryAllByAnswerDayOrderByTeamNumber(Integer answerDay){
+    public ResponseMap queryAllByAnswerDayOrderByTeamNumber(){
+        Integer answerDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         List<Team> teamNumber = teamService.list(new QueryWrapper<Team>().eq("answerDay",answerDay).orderByDesc("teamNumber"));
         return teamNumber!=null?ResponseMap.ok().data(teamNumber):ResponseMap.error();
     }
