@@ -17,6 +17,8 @@ public interface GradesMapper extends BaseMapper<Grades> {
      * @return 答题次数
      */
     Integer searchAllByAnswerDay(Integer answerDay,String region);
+
+    Integer searchGradesExit(Integer userId, Integer score, Integer spendTime, Integer answerDay);
 }
 
 

@@ -16,9 +16,9 @@ public interface LotteryService extends IService<Lottery> {
 
     ResponseMap getLottery();
 
-    Boolean addLottery();
+    void addLottery();
 
-    Boolean addLotteryFirst();
+    void addLotteryFirst();
 
     ResponseMap residueLottery() throws ParseException;
 }

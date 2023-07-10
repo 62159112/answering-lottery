@@ -15,12 +15,16 @@ import java.text.ParseException;
 public class RaffleController {
     @Resource
     private LotteryService lotteryService;
-
+    /**
+     * 获取用户抽奖结果
+     * */
     @GetMapping("/{userId}")
     public ResponseMap getResult(@PathVariable Integer userId){
         return lotteryService.getResult(userId);
     }
-
+    /**
+     * 获取最后一日奖池剩余
+     * */
     @GetMapping("/last")
     public ResponseMap residueLottery() throws ParseException {
         return lotteryService.residueLottery();

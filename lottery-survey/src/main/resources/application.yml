@@ -5,8 +5,7 @@ spring:
     url: jdbc:mysql://175.27.191.217:3306/dcd_answering_lottery?&useSSL=false
     username: root
     password: MLY59420s@
-  application:
-    name: order-service
+
 
 mybatis-plus:
   global-config:

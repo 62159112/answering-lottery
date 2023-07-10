@@ -10,12 +10,7 @@ import com.chongdong.lotterysurvey.model.AnswerResult;
 * @Entity com.chongdong.lotterysurvery.model.Answer
 */
 public interface AnswerResultMapper extends BaseMapper<AnswerResult> {
-    /**
-     * 根据选择的答题id查询答题时间
-     * @param id 1 老城街道
-     * @return 红花岗区老城街道
-     */
-    String searchSpendTimeById(Integer id);
+
 }
 
 

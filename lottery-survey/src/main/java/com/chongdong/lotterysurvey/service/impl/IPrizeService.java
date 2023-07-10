@@ -30,7 +30,10 @@ public class IPrizeService extends ServiceImpl<PrizeMapper, Prize>
     private UserService userService;
     @Resource
     private PageService<Prize> pageService;
-
+    /**
+     * 传入用户id判断该用户是否有奖励记录
+     * 若没有根据用户信息创建奖励记录
+     * */
     @Override
     public void userEmpty(Integer userId) {
         Prize prize = this.getOne(new QueryWrapper<Prize>().eq("userId", userId));
@@ -42,12 +45,16 @@ public class IPrizeService extends ServiceImpl<PrizeMapper, Prize>
             addPrize(prize1);
         }
     }
-
+    /**
+     * 添加用户奖励记录方法
+     * */
     @Override
     public void addPrize(Prize prize) {
         this.save(prize);
     }
-
+    /**
+     * 根据id获取用户奖励记录
+     * */
     @Override
     public ResponseMap getPrize(Integer userId) {
         Prize prize = this.getOne(new QueryWrapper<Prize>().eq("userId", userId));
@@ -62,7 +69,9 @@ public class IPrizeService extends ServiceImpl<PrizeMapper, Prize>
         }
         return responseMap ;
     }
-
+    /**
+     * 用户奖励记录列表按奖励从高到低分页查询方法
+     * */
     @Override
     public ResponseMap listPrize(Integer page, Integer size) {
         Page<Prize> pageList = this.page(pageService.getModelPage(page, size),new QueryWrapper<Prize>().orderByDesc("prize"));
@@ -77,7 +86,9 @@ public class IPrizeService extends ServiceImpl<PrizeMapper, Prize>
         }
         return responseMap;
     }
-
+    /**
+     * 支付用户奖励后清空该用户奖励
+     * */
     @Override
     public ResponseMap payPrize(Integer userId) {
         Prize prize = this.getOne(new QueryWrapper<Prize>().eq("userId", userId));

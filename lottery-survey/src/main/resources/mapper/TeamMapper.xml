@@ -19,6 +19,17 @@
     <select id="searchAllByAnswerdayAndStreetid" resultType="java.lang.Integer">
         select count(*)
         from tcd_team
-        where answerDay = #{answerDay} and teamName = #{teamName}
+        where answerDay = #{answerDay} and streetId = #{streetId}
+    </select>
+    <select id="searchStreetidByTeamname" resultType="java.lang.Integer">
+        select distinct streetId
+        from tcd_team
+        where teamName = #{teamName}
+    </select>
+    <select id="searchAllOrderByTeamNumber" resultType="com.chongdong.lotterysurvey.model.Team">
+        SELECT teamName, streetId, SUM(teamNumber) AS teamNumber
+        FROM tcd_team
+        GROUP BY teamName, streetId
+        ORDER BY teamNumber DESC;
     </select>
 </mapper>

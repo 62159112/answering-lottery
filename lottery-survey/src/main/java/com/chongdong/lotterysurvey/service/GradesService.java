@@ -1,7 +1,14 @@
 package com.chongdong.lotterysurvey.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.lotterysurvey.model.Grades;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chongdong.lotterysurvey.model.ResponseMap;
+import com.chongdong.lotterysurvey.model.Team;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author wo
@@ -10,4 +17,18 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface GradesService extends IService<Grades> {
     Integer queryTeamNumber(Integer answerDay,String region);
+
+    Integer queryGradesExit(Integer userId,Integer score,Integer spendTime,Integer answerDay);
+
+    List<Grades> queryAllGradesOrderByAscAnswerDay();
+
+    List<Grades> queryAllByAnswerDayOrderByScore(Integer answerDay);
+
+    List<Grades> queryAllMaxScoreByUsername(HttpServletRequest request);
+
+    List<Grades> queryAllByUsername(HttpServletRequest request);
+
+    Map flushed(Integer userId, Integer answerDay);
+
+    ResponseMap add(Team team);
 }

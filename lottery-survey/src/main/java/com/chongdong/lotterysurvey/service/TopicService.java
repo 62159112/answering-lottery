@@ -1,8 +1,10 @@
 package com.chongdong.lotterysurvey.service;
 
+import cn.hutool.http.server.HttpServerRequest;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.Topic;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -13,8 +15,20 @@ import java.util.List;
 */
 public interface TopicService extends IService<Topic> {
 
-    ResponseMap queryTopic(List<Topic> list);
+    ResponseMap queryTopic(HttpServletRequest request, List<Topic> topics);
 
 
+    ResponseMap selectTopic(Integer userId, List<Topic> topics);
+    
+    
 
+    ResponseMap saveTopic(Topic topic);
+    
+    ResponseMap updateTopicById(Topic topic);
+
+    ResponseMap deleteTopic(Integer id);
+
+    ResponseMap selectPage(Integer current, String topicContent);
+
+    ResponseMap selectById(Integer id);
 }
