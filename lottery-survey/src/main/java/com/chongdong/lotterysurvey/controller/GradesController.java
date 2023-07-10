@@ -10,6 +10,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,28 +36,28 @@ public class GradesController {
     // 总的每日个人成绩排行
     @GetMapping("/list")
     public ResponseMap queryAllGradesOrderByAscAnswerDay() {
-        Page<Grades> gradesPage = gradesService.queryAllGradesOrderByAscAnswerDay();
+        List<Grades> gradesPage = gradesService.queryAllGradesOrderByAscAnswerDay();
         // 返回查询结果
         return ResponseMap.ok().data(gradesPage);
     }
     // 查具体某日个人成绩排行
     @GetMapping("/listAnswerDay")
     public ResponseMap queryAllByAnswerDayOrderByScore(Integer answerDay) {
-        Page<Grades> gradesPage = gradesService.queryAllByAnswerDayOrderByScore(answerDay);
+        List<Grades> gradesPage = gradesService.queryAllByAnswerDayOrderByScore(answerDay);
         // 返回查询结果
         return ResponseMap.ok().data(gradesPage);
     }
     // 查询个人所有最高分成绩
     @GetMapping("/listUserMaxScore")
     public ResponseMap queryAllMaxScoreByUsername(HttpServletRequest request) {
-        Page<Grades> resultPage = gradesService.queryAllMaxScoreByUsername(request);
+        List<Grades> resultPage = gradesService.queryAllMaxScoreByUsername(request);
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
     // 查询个人所有成绩
     @GetMapping("/listUserScore")
     public ResponseMap queryAllByUsername(HttpServletRequest request) {
-        Page<Grades> resultPage = gradesService.queryAllByUsername(request);
+        List<Grades> resultPage = gradesService.queryAllByUsername(request);
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }

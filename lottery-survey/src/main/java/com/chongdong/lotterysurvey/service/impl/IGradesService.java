@@ -45,7 +45,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     }
 
     @Override
-    public Page<Grades> queryAllGradesOrderByAscAnswerDay() {
+    public List<Grades> queryAllGradesOrderByAscAnswerDay() {
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("userid", "username", "MAX(score) as score", "MIN(spendtime) as spendtime", "MIN(regtime) as regtime","region","answerDay")
@@ -54,14 +54,11 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 .orderByDesc("score")
                 .orderByAsc("spendtime")
                 .orderByAsc("regtime");
-
-        // 查询前十名成绩
-        Page<Grades> page = new Page<>(1, 50);
-        return this.page(page, queryWrapper);
+        return this.list(queryWrapper);
     }
 
     @Override
-    public Page<Grades> queryAllByAnswerDayOrderByScore(Integer answerDay) {
+    public List<Grades> queryAllByAnswerDayOrderByScore(Integer answerDay) {
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("userid", "username", "MAX(score) as score", "MIN(spendtime) as spendtime", "MIN(regtime) as regtime","region","answerDay")
@@ -71,13 +68,11 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 .orderByAsc("spendtime")
                 .orderByAsc("regtime")
                 .eq("answerDay",answerDay);
-        // 查询前十名成绩
-        Page<Grades> page = new Page<>(1, 50);
-        return this.page(page, queryWrapper);
+        return this.list(queryWrapper);
     }
 
     @Override
-    public Page<Grades> queryAllMaxScoreByUsername(HttpServletRequest request) {
+    public List<Grades> queryAllMaxScoreByUsername(HttpServletRequest request) {
         // 更新今日最新个人成绩数据
         flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
@@ -90,13 +85,11 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 .orderByAsc("spendtime")
                 .eq("userid",getUserId(request));
 
-        // 查询前十条成绩
-        Page<Grades> page = new Page<>(1, 10);
-        return this.page(page, queryWrapper);
+        return this.list(queryWrapper);
     }
 
     @Override
-    public Page<Grades> queryAllByUsername(HttpServletRequest request) {
+    public List<Grades> queryAllByUsername(HttpServletRequest request) {
         // 更新今日最新个人成绩数据
         flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
@@ -106,9 +99,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
                 .orderByAsc("answerDay")
                 .orderByDesc("score")
                 .eq("userid",getUserId(request));
-        // 查询前十条成绩
-        Page<Grades> page = new Page<>(1, 30);
-        return this.page(page, queryWrapper);
+        return this.list(queryWrapper);
     }
     // 刷新信息
     @Override

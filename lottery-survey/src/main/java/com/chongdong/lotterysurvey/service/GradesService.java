@@ -7,6 +7,7 @@ import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.Team;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,13 +20,13 @@ public interface GradesService extends IService<Grades> {
 
     Integer queryGradesExit(Integer userId,Integer score,Integer spendTime,Integer answerDay);
 
-    Page<Grades> queryAllGradesOrderByAscAnswerDay();
+    List<Grades> queryAllGradesOrderByAscAnswerDay();
 
-    Page<Grades> queryAllByAnswerDayOrderByScore(Integer answerDay);
+    List<Grades> queryAllByAnswerDayOrderByScore(Integer answerDay);
 
-    Page<Grades> queryAllMaxScoreByUsername(HttpServletRequest request);
+    List<Grades> queryAllMaxScoreByUsername(HttpServletRequest request);
 
-    Page<Grades> queryAllByUsername(HttpServletRequest request);
+    List<Grades> queryAllByUsername(HttpServletRequest request);
 
     Map flushed(Integer userId, Integer answerDay);
 
