@@ -71,9 +71,9 @@ public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, Answer
         }
         userService.updateById(user);
 
-        //结束时间
-        answerResult.setCreateTime(LocalDateTime.now());
-
+        //答题用户
+        //answerResult.setUserId(id);
+        //答题时间
         answerResult.setCreateTime(LocalDateTime.now());
         //添加答题结果
         int insert = answerResultMapper.insert(answerResult);
