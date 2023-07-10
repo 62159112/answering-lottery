@@ -11,6 +11,6 @@ public class ManageInterceptorConfig implements WebMvcConfigurer {
     UserInterceptor userInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/logon/user/{userPhone}/{userPassword}","/logon/AddUser");
+        registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/logon/user/{userPhone}/{userPassword}","/logon/AddUser","/team/list**","/grades/listAnswerDay");
     }
 }
