@@ -42,7 +42,6 @@ public class IPrizeService extends ServiceImpl<PrizeMapper, Prize>
             Prize prize1 = new Prize();
             prize1.setUserid(userId);
             prize1.setUserphone(user.getUserPhone());
-            prize1.setPrize(new BigDecimal(0));
             addPrize(prize1);
         }
     }
