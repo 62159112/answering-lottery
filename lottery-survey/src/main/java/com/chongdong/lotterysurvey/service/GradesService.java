@@ -1,10 +1,8 @@
 package com.chongdong.lotterysurvey.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.chongdong.lotterysurvey.model.Grades;
+import com.chongdong.lotterysurvey.model.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.chongdong.lotterysurvey.model.ResponseMap;
-import com.chongdong.lotterysurvey.model.Team;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public interface GradesService extends IService<Grades> {
 
     List<Grades> queryAllByUsername(HttpServletRequest request);
 
-    Map flushed(Integer userId, Integer answerDay);
+    Map flushed(Integer userId, Integer answerDay, User user, List<AnswerResult> answerResultList);
 
     ResponseMap add(Team team);
 }

@@ -25,10 +25,10 @@ import java.util.Map;
 @Service
 public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     implements GradesService{
-    @Resource
-    private UserService userService;
-    @Resource
-    private AnswerResultService answerResultService;
+    /*@Resource
+    private UserService userService;*/
+    /*@Resource
+    private AnswerResultService answerResultService;*/
     @Resource
     private StreetService streetService;
     @Resource
@@ -74,7 +74,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     @Override
     public List<Grades> queryAllMaxScoreByUsername(HttpServletRequest request) {
         // 更新今日最新个人成绩数据
-        flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+//        flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
@@ -91,7 +91,7 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     @Override
     public List<Grades> queryAllByUsername(HttpServletRequest request) {
         // 更新今日最新个人成绩数据
-        flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+//        flushed(getUserId(request), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
         // 查询条件，根据总分、答题用时和注册日期进行排序
         QueryWrapper<Grades> queryWrapper = new QueryWrapper<>();
@@ -103,13 +103,8 @@ public class IGradesService extends ServiceImpl<GradesMapper, Grades>
     }
     // 刷新信息
     @Override
-    public Map flushed(Integer userId, Integer answerDay) {
+    public Map flushed(Integer userId, Integer answerDay,User user,List<AnswerResult> answerResultList) {
         // 设置注册时间
-        User user = userService.getOne(new QueryWrapper<User>().eq("id", userId));
-        QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userId", userId);
-        queryWrapper.between("createTime", LocalDate.of(2023, 7, answerDay),LocalDate.of(2023, 7, answerDay+1));
-        List<AnswerResult> answerResultList = answerResultService.list(queryWrapper);
         Map map = new HashMap();
         int i =0;
         for (AnswerResult answerResult:answerResultList) {

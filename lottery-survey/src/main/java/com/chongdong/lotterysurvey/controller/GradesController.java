@@ -64,7 +64,7 @@ public class GradesController {
         return ResponseMap.ok().data(resultPage);
     }
     // 刷新个人答题数据
-    @PostMapping
+   /* @PostMapping
     public ResponseMap flushed(Integer userId,Integer answerDay){
         Map map = gradesService.flushed(userId,answerDay);
         Team team = new Team();
@@ -73,5 +73,5 @@ public class GradesController {
                     ResponseMap add = gradesService.add(team);
                     map.put("更新地区数据",add);
         return ResponseMap.ok().data(map);
-    }
+    }*/
 }

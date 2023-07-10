@@ -10,6 +10,7 @@ import com.chongdong.lotterysurvey.model.AnswerResult;
 import com.chongdong.lotterysurvey.model.ResponseMap;
 import com.chongdong.lotterysurvey.model.User;
 import com.chongdong.lotterysurvey.service.AnswerResultService;
+import com.chongdong.lotterysurvey.service.GradesService;
 import com.chongdong.lotterysurvey.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
@@ -19,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.net.HttpCookie;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +42,9 @@ public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, Answer
     private UserService userService;
     @Resource
     private AnswerResultMapper answerResultMapper;
+
+    @Resource
+    private GradesService gradesService;
 
 
 
@@ -75,6 +81,15 @@ public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, Answer
             responseMap.setData(insert);
             responseMap.setFlag(true);
             responseMap.setMessage("答题成绩添加成功！");
+
+            Integer answerDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+            User userA = userService.getOne(new QueryWrapper<User>().eq("id", id));
+            QueryWrapper<AnswerResult> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("userId", id);
+            queryWrapper.between("createTime", LocalDate.of(2023, 7, answerDay),LocalDate.of(2023, 7, answerDay+1));
+            List<AnswerResult> answerResultList = this.list(queryWrapper);
+            gradesService.flushed(id,answerDay,userA,answerResultList);
+
         }else {
             responseMap.setData(insert);
             responseMap.setFlag(false);
