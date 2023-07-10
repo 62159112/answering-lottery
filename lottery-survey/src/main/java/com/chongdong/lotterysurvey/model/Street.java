@@ -28,7 +28,7 @@ public class Street implements Serializable {
     /**
      * 镇或街道所属市区id
      */
-    private Integer cityid;
+    private String cityid;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

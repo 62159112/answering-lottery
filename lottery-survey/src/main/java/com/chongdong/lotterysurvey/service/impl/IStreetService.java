@@ -25,7 +25,7 @@ public class IStreetService extends ServiceImpl<StreetMapper, Street>
      * 根据区id获取该区全部街道
      * */
     @Override
-    public ResponseMap listStreetByCity(Integer cityId) {
+    public ResponseMap listStreetByCity(String cityId) {
         QueryWrapper<Street> queryWrapper = new QueryWrapper<>();
         List<Street> streetList = this.list(queryWrapper.eq("cityId", cityId));
         if (streetList!=null){
@@ -40,10 +40,6 @@ public class IStreetService extends ServiceImpl<StreetMapper, Street>
         return responseMap ;
     }
 
-    @Override
-    public String queryStreetFullName(Integer streetId) {
-        return baseMapper.searchStreetFullNameByStreetId(streetId);
-    }
 }
 
 

@@ -17,7 +17,7 @@ public class StreetController {
      * 获取区域全部街道信息
      * */
     @GetMapping("/{cityId}")
-    public ResponseMap listStreetByCity(@PathVariable Integer cityId){
+    public ResponseMap listStreetByCity(@PathVariable String cityId){
         return streetService.listStreetByCity(cityId);
     }
 
