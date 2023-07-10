@@ -156,7 +156,7 @@ public class IAnswerResultService extends ServiceImpl<AnswerResultMapper, Answer
             responseMap.setFlag(true);
             responseMap.setMessage("答题成绩查询成功！");
         }else {
-            responseMap.setData(null);
+            responseMap.setData(0);
             responseMap.setFlag(false);
             responseMap.setMessage("答题成绩查询失败！");
         }
