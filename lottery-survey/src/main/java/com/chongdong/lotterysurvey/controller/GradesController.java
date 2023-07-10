@@ -56,7 +56,6 @@ public class GradesController {
         // 返回查询结果
         return ResponseMap.ok().data(resultPage);
     }
-
     // 查具体某日个人成绩排行
     @GetMapping("/listAnswerDay")
     public ResponseMap queryAllByAnswerDayOrderByScore(Integer answerDay) {
