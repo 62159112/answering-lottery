@@ -40,6 +40,9 @@ public class IStreetService extends ServiceImpl<StreetMapper, Street>
         return responseMap ;
     }
 
+    public String queryStreetFullName(Integer streetId) {
+        return baseMapper.searchStreetFullNameByStreetId(streetId);
+    }
 }
 
 
