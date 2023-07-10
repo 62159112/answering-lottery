@@ -17,6 +17,6 @@
 
     <sql id="Base_Column_List">
         id,topic_content,options_a,
-        options_b,options_c,options_d,createTime
+        options_b,options_c,options_d,createTime,answer
     </sql>
 </mapper>
