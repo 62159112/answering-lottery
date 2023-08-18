@@ -1,5 +1,6 @@
 package com.chongdong.lotterysurvey.config;
 
+/*
 import com.chongdong.lotterysurvey.interceptor.UserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,3 +15,4 @@ public class ManageInterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/logon/user/{userPhone}/{userPassword}","/logon/AddUser","/team/list**","/grades/listAnswerDay");
     }
 }
+*/

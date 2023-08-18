@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-@Component
+/*@Component
 public class UserInterceptor implements HandlerInterceptor {
     @Resource
     private UserMapper userMapper;
@@ -38,4 +38,4 @@ public class UserInterceptor implements HandlerInterceptor {
 
 
     }
-}
+}*/
